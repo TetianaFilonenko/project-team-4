@@ -14,6 +14,11 @@ Available commands:
   add-birthday [name] [birthday] - Adds birthday to the contact
   show-birthday [name]           - Shows birthday for specific contact
   birthdays                      - Shows birthdays for all contacts celebrating next week
+  add-note
+  find-notes
+  delete-note
+  edit-note
+  all-notes
   close/exit                     - Exits the program.
   save                           - Store current book to json file with name result.json
   restore                        - Restore book from result.json
@@ -53,6 +58,22 @@ def main():
             print(input_manager.get_next_week_birthdays())
         elif command == "random-book":
             print(input_manager.generate_random_book())
+        elif command == "add-note":
+            note = input("Enter your note: ")
+            print(input_manager.add_note(note))
+        elif command == "find-notes":
+            keyword = input("Enter searching keyword: ")
+            print(input_manager.find_notes(keyword))
+        elif command == "delete-note":
+            # TODO: add option to delete by name
+            index = input("Enter index of note you want to remove: ")
+            print(input_manager.delete_note(index))
+        elif command == "edit-note":
+            index = input("Enter index of note you want to change: ")
+            new_note = input("Enter a new note: ")
+            print(input_manager.edit_note(index, new_note))
+        elif command == "all-notes":
+            print(input_manager.all_notes())
         elif command == "save":
             print(input_manager.save_to_json())
         elif command == "restore":
