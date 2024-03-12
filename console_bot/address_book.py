@@ -85,8 +85,7 @@ class Address(Field):
 
     @value.setter
     def value(self, new_value):
-        # This is a simple regex for addresses, it can be modified to fit more specific needs
-        if re.match(r"^\d+\s[A-z]+\s[A-z]+", new_value):
+        if isinstance(new_value, str) and len(new_value) > 0:
             self.__value = new_value
         else:
             self.__value = None
@@ -228,8 +227,10 @@ class AddressBook(UserDict):
             return f"Birthday data for Record with name {name} is not provided"
 
     def get_next_week_birthdays(self):
-        result = [{"name": key, "birthday": value.birthday.value} for key, value in self.items() if
-                  value and value.birthday]
+        result = [
+            {"name": key, "birthday": value.birthday.value}
+            for key, value in self.items() if value and value.birthday
+        ]
 
         return get_birthdays_per_week(result)
 
