@@ -70,5 +70,3 @@ Friday: Melissa
 Enter a command: save
 Storing is done
 ```
-
-Useless comment
