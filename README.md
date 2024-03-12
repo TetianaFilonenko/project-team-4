@@ -1,6 +1,7 @@
 Final version of the bot
 Main functions:
-- has helper methods 
+
+- has helper methods
   - 'help' to show all commands
   - 'close' closes current session of bot
   - 'hello'shows welcome message
@@ -68,3 +69,4 @@ Tuesday: John
 Friday: Melissa
 Enter a command: save
 Storing is done
+```
