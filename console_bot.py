@@ -1,7 +1,7 @@
 """Module providing a function printing bot messages."""
 
 from console_bot.input_manager import InputManager
-from console_bot.address_book import AddressBook 
+from console_bot.address_book import AddressBook
 
 
 def print_help():

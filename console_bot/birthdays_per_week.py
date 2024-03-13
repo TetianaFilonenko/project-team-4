@@ -46,7 +46,7 @@ def get_today_birthday(users):
         if birthday_this_year == current_date:
             result['Today'].append(user_name)
     if not result:
-        return f'Today there is no birthdays'
+        return 'Today there is no birthdays'
     return '\n'.join([f'Don`t forget to congratulate: {(',').join(people)}' for people in result.values()])
 
 
