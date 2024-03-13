@@ -1,6 +1,7 @@
 from .errors import input_error
 from .address_book import Record, AddressBook
 from .note import NoteBook, Note
+from .address_book import Record, AddressBook, Phone
 import json
 
 
@@ -26,12 +27,8 @@ class InputManager:
 
     @input_error
     def change_contact(self, args):
-        name, new_phone = args
-        new_record = Record(name)
-        isvalid, message = new_record.add_phone(new_phone)
-        if isvalid:
-            self.book.add_contact(new_record, override=True)
-        return message
+        name, old_phone, new_phone = args
+        return self.book.change_contact(name, old_phone, new_phone)
 
     @input_error
     def get_contact_phone(self, args):
@@ -65,8 +62,8 @@ class InputManager:
 
     @input_error
     def change_contact_email(self, args):
-        name, new_email = args
-        return self.book.change_email(name, new_email)
+        name, old_email, new_email = args
+        return self.book.change_email(name, old_email, new_email)
 
     @input_error
     def get_contact_email(self, args):
@@ -80,10 +77,10 @@ class InputManager:
         return self.book.add_address(name, address)
 
     @input_error
-    def change_contact_address(self, args):
+    def change_contact_address(self, args, new_address):
         name, *address_parts = args
-        address = ' '.join(address_parts)
-        return self.book.change_address(name, address)
+        old_address = ' '.join(address_parts)
+        return self.book.change_address(name, old_address, new_address)
 
     @input_error
     def get_contact_address(self, args):

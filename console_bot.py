@@ -1,4 +1,5 @@
 """Module providing a function printing bot messages."""
+
 from console_bot.input_manager import InputManager
 
 
@@ -6,15 +7,15 @@ def print_help():
     """Function printing help message for bot."""
     help_text = """
 Available commands:
-  hello                          - Ask the bot how it can help you.
-  add [name] [phone]             - Adds a contact with the specified name and phone number. Email and address can be added using separate commands.
-  change [name] [phone]          - Changes the phone number for the specified contact.
-  phone [name]                   - Retrieves the phone number for the specified contact.
-  add-email [name] [email]       - Adds an email to the specified contact.
-  change-email [name] [email]    - Changes the email for the specified contact.
-  email [name]                   - Retrieves the email for the specified contact.
-  add-address [name] [address]   - Adds an address to the specified contact.
-  change-address [name] [address]- Changes the address for the specified contact.
+  hello                                          - Ask the bot how it can help you.
+  add [name] [phone]                             - Adds a contact with the specified name and phone number. Email and address can be added using separate commands.
+  change [name] [old-phone] [phone]              - Changes the phone number for the specified contact.
+  phone [name]                                   - Retrieves the phone number for the specified contact.
+  add-email [name] [email]                       - Adds an email to the specified contact.
+  change-email [name] [old-email ][email]        - Changes the email for the specified contact.
+  email [name]                                   - Retrieves the email for the specified contact.
+  add-address [name] [address]                   - Adds an address to the specified contact.
+  change-address [name] [old-address] [address]  - Changes the address for the specified contact.
   address [name]                 - Retrieves the address for the specified contact.
   all                            - Displays all contacts in the system.
   help                           - Shows this help message.
@@ -66,7 +67,8 @@ def main():
         elif command == "add-address":
             print(input_manager.add_contact_address(args))
         elif command == "change-address":
-            print(input_manager.change_contact_address(args))
+            new_address = input("Enter new address: ")
+            print(input_manager.change_contact_address(args, new_address))
         elif command == "address":
             print(input_manager.get_contact_address(args))
         elif command == "all":

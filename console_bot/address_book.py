@@ -115,12 +115,14 @@ class Record:
             phone = phone.value
         self.phones = [el for el in self.phones if el.value != phone]
 
-    def edit_phone(self, old_phone, new_phone):
-        if isinstance(old_phone, Phone) and isinstance(new_phone, Phone):
-            old_phone = old_phone.value
-            new_phone = new_phone.value
-
-        self.phones = [Phone(new_phone) if el.value == old_phone else el for el in self.phones]
+    def edit_phone(self, old_phone_value, new_phone_value):
+        old_phone = Phone(old_phone_value)
+        new_phone = Phone(new_phone_value)
+        if new_phone.is_valid() and old_phone.is_valid():
+            self.phones = [new_phone if el.value == old_phone_value else el for el in self.phones]
+            return True, f'Phone: {old_phone_value} was changed to {new_phone_value} for record {self.name.value}'
+        else:
+            return False, f'Invalid phone format. Old: {old_phone_value}, New: {new_phone_value}'
 
     def find_phone(self, phone):
         if isinstance(phone, Phone):
@@ -148,8 +150,14 @@ class Record:
     def remove_email(self, email):
         self.emails = [el for el in self.emails if el.value != email]
 
-    def edit_email(self, old_email, new_email):
-        self.emails = [Email(new_email) if el.value == old_email else el for el in self.emails]
+    def edit_email(self, old_email_value, new_email_value):
+        old_email = Email(old_email_value)
+        new_email = Email(new_email_value)
+        if new_email.is_valid() and old_email.is_valid():
+            self.emails = [new_email if el.value == old_email_value else el for el in self.emails]
+            return True, f'Email: {old_email_value} was changed to {new_email_value} for record {self.name.value}'
+        else:
+            return False, f'Invalid email format. Old: {old_email_value}, New: {new_email_value}'
 
     def add_address(self, address: str):
         address_instance = Address(address)
@@ -162,8 +170,14 @@ class Record:
     def remove_address(self, address):
         self.addresses = [el for el in self.addresses if el.value != address]
 
-    def edit_address(self, old_address, new_address):
-        self.addresses = [Address(new_address) if el.value == old_address else el for el in self.addresses]
+    def edit_address(self, old_address_value, new_address_value):
+        old_address = Address(old_address_value)
+        new_address = Address(new_address_value)
+        if new_address.is_valid() and old_address.is_valid():
+            self.addresses = [new_address if el.value == old_address_value else el for el in self.addresses]
+            return True, f'Address: {old_address_value} was changed to {new_address_value} for record {self.name.value}'
+        else:
+            return False, f'Invalid address format. Old: {old_address_value}, New: {new_address_value}'
 
     def __str__(self):
         parts = [f"Contact name: {self.name}"]
@@ -209,6 +223,13 @@ class AddressBook(UserDict):
             self.data[record.name.value] = record
         return record
 
+    def change_contact(self, name, old_phone, new_phone):
+        if name in self.data:
+            is_changed, message = self.data[name].edit_phone(old_phone, new_phone)
+            return message
+        else:
+            return f"Contact {name} not found. Add it first to the contact book"
+
     def add_birthday(self, record: Record):
         if record.name.value in self.data.keys():
             # keep track of previous phone data
@@ -241,13 +262,12 @@ class AddressBook(UserDict):
         else:
             return f"Contact {name} not found. Add it first to the contact book"
 
-    def change_email(self, name, new_email):
+    def change_email(self, name, old_email, new_email):
         if name in self.data:
-            self.data[name].emails.clear()  # Assuming each contact has only one email for simplicity
-            is_valid, message = self.data[name].add_email(new_email)
+            is_changed, message = self.data[name].edit_email(old_email, new_email)
             return message
         else:
-            return f"Contact {name} not found."
+            return f"Contact {name} not found. Add it first to the contact book"
 
     def get_email(self, name):
         if name in self.data and self.data[name].emails:
@@ -260,22 +280,21 @@ class AddressBook(UserDict):
             is_valid, message = self.data[name].add_address(address)
             return message
         else:
-            return f"Contact {name} not found."
+            return f"Contact {name} not found. Add it first to the contact book"
 
-    def change_address(self, name, new_address):
+    def change_address(self, name, old_address, new_address):
         if name in self.data:
-            self.data[name].addresses.clear()  # Assuming each contact has only one address for simplicity
-            is_valid, message = self.data[name].add_address(new_address)
+            is_changed, message = self.data[name].edit_address(old_address, new_address)
             return message
         else:
-            return f"Contact {name} not found."
+            return f"Contact {name} not found. Add it first to the contact book"
 
     def get_address(self, name):
         if name in self.data and self.data[name].addresses:
             return ', '.join(address.value for address in self.data[name].addresses)
         else:
             return f"Address for contact {name} not found or not set."
-        
+
     def delete(self, name: str):
         del self.data[name]
 
