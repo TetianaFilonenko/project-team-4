@@ -239,7 +239,7 @@ class AddressBook(UserDict):
             is_valid, message = self.data[name].add_email(email)
             return message
         else:
-            return f"Contact {name} not found."
+            return f"Contact {name} not found. Add it first to the contact book"
 
     def change_email(self, name, new_email):
         if name in self.data:
