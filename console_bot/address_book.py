@@ -24,7 +24,7 @@ class Birthday(Field):
     @value.setter
     def value(self, new_value):
         try:
-            self.__value = datetime.strptime(new_value, '%d.%m.%Y')
+            self.__value = datetime.strptime(new_value, "%d.%m.%Y")
         except ValueError:
             self.__value = None
 
@@ -33,13 +33,20 @@ class Birthday(Field):
 
     def ordinal(self):
         day = self.__value.day
-        return "%d%s" % (day, "th" if 4 <= day % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(day % 10, "th"))
+        return "%d%s" % (
+            day,
+            (
+                "th"
+                if 4 <= day % 100 <= 20
+                else {1: "st", 2: "nd", 3: "rd"}.get(day % 10, "th")
+            ),
+        )
 
     def to_dict(self):
-        return self.__value.strftime('%d.%m.%Y')
+        return self.__value.strftime("%d.%m.%Y")
 
     def __str__(self):
-        return self.__value.strftime(f'%B {self.ordinal()}')
+        return self.__value.strftime(f"%B {self.ordinal()}")
 
 
 class Name(Field):
@@ -106,9 +113,15 @@ class Record:
         phone_instance = Phone(phone)
         if phone_instance.is_valid():
             self.phones.append(phone_instance)
-            return phone_instance.is_valid(), f'phone: {phone} was added to record {self.name.value}'
+            return (
+                phone_instance.is_valid(),
+                f"phone: {phone} was added to record {self.name.value}",
+            )
         else:
-            return phone_instance.is_valid(), f'Only 10-digits numbers are accepted, you entered: {phone}'
+            return (
+                phone_instance.is_valid(),
+                f"Only 10-digits numbers are accepted, you entered: {phone}",
+            )
 
     def remove_phone(self, phone):
         if isinstance(phone, Phone):
@@ -120,7 +133,9 @@ class Record:
             old_phone = old_phone.value
             new_phone = new_phone.value
 
-        self.phones = [Phone(new_phone) if el.value == old_phone else el for el in self.phones]
+        self.phones = [
+            Phone(new_phone) if el.value == old_phone else el for el in self.phones
+        ]
 
     def find_phone(self, phone):
         if isinstance(phone, Phone):
@@ -133,37 +148,48 @@ class Record:
         birthday_instance = Birthday(birthday)
         if birthday_instance.is_valid():
             self.birthday = birthday_instance
-            return birthday_instance.is_valid(), f'birthday: {birthday} was added to record {self.name.value}'
+            return (
+                birthday_instance.is_valid(),
+                f"birthday: {birthday} was added to record {self.name.value}",
+            )
         else:
-            return birthday_instance.is_valid(), f"Only '%d.%m.%Y' date format is accepted, you entered: {birthday}"
+            return (
+                birthday_instance.is_valid(),
+                f"Only '%d.%m.%Y' date format is accepted, you entered: {birthday}",
+            )
 
     def add_email(self, email: str):
         email_instance = Email(email)
         if email_instance.is_valid():
             self.emails.append(email_instance)
-            return True, f'Email: {email} was added to record {self.name.value}'
+            return True, f"Email: {email} was added to record {self.name.value}"
         else:
-            return False, f'Invalid email format: {email}'
+            return False, f"Invalid email format: {email}"
 
     def remove_email(self, email):
         self.emails = [el for el in self.emails if el.value != email]
 
     def edit_email(self, old_email, new_email):
-        self.emails = [Email(new_email) if el.value == old_email else el for el in self.emails]
+        self.emails = [
+            Email(new_email) if el.value == old_email else el for el in self.emails
+        ]
 
     def add_address(self, address: str):
         address_instance = Address(address)
         if address_instance.is_valid():
             self.addresses.append(address_instance)
-            return True, f'Address: {address} was added to record {self.name.value}'
+            return True, f"Address: {address} was added to record {self.name.value}"
         else:
-            return False, f'Invalid address format: {address}'
+            return False, f"Invalid address format: {address}"
 
     def remove_address(self, address):
         self.addresses = [el for el in self.addresses if el.value != address]
 
     def edit_address(self, old_address, new_address):
-        self.addresses = [Address(new_address) if el.value == old_address else el for el in self.addresses]
+        self.addresses = [
+            Address(new_address) if el.value == old_address else el
+            for el in self.addresses
+        ]
 
     def __str__(self):
         parts = [f"Contact name: {self.name}"]
@@ -180,10 +206,10 @@ class Record:
     def to_dict(self):
         return {
             "name": self.name.to_dict(),
-            "birthday": self.birthday.to_dict() if self.birthday else '',
+            "birthday": self.birthday.to_dict() if self.birthday else "",
             "phones": [phone.to_dict() for phone in self.phones],
             "emails": [email.to_dict() for email in self.emails],
-            "addresses": [address.to_dict() for address in self.addresses]
+            "addresses": [address.to_dict() for address in self.addresses],
         }
 
 
@@ -194,6 +220,26 @@ class AddressBook(UserDict):
     def find(self, name: str):
         for key, value in filter(lambda el: name == el[0], self.items()):
             return f"Found record with name: '{key}'. \nResult: {str(value)}"
+
+    def find_all(self, term: str):
+        res = ""
+        res1 = self.find(term)
+        if not res1:
+            res1 = "\nNot found in names"
+        else:
+            res1 = "\n" + res1
+        for value in filter(
+            lambda el: re.search(term, str(el))
+            and not re.search(str(el), res)
+            and not re.search(str(el), res1),
+            self.values(),
+        ):
+            res = res + f"{str(value)}\n"
+        if res:
+            res = "\n-=Found in other fields=-\n" + res
+        else:
+            res = "\nNothing found in fields\n"
+        return res1 + res
 
     def add_contact(self, record: Record, override=False):
         if override and record.name.value in self.data.keys():
@@ -229,7 +275,8 @@ class AddressBook(UserDict):
     def get_next_week_birthdays(self):
         result = [
             {"name": key, "birthday": value.birthday.value}
-            for key, value in self.items() if value and value.birthday
+            for key, value in self.items()
+            if value and value.birthday
         ]
 
         return get_birthdays_per_week(result)
@@ -241,8 +288,8 @@ class AddressBook(UserDict):
         fake = Faker()
         for _i in range(0, 10):
             name = fake.first_name()
-            phone_number = fake.numerify('##########')
-            birthday = fake.date_object().strftime('%d.%m.%Y')
+            phone_number = fake.numerify("##########")
+            birthday = fake.date_object().strftime("%d.%m.%Y")
 
             record = Record(name)
             record.birthday = Birthday(birthday)
@@ -257,9 +304,9 @@ class AddressBook(UserDict):
     def from_dict(cls, dict_data):
         address_book = cls()
         for record_name, record_data in dict_data.items():
-            record = Record(record_data['name'])
-            if len(record_data['birthday']) > 0:
-                record.birthday = Birthday(record_data['birthday'])
-            record.phones = [Phone(phone) for phone in record_data['phones']]
+            record = Record(record_data["name"])
+            if len(record_data["birthday"]) > 0:
+                record.birthday = Birthday(record_data["birthday"])
+            record.phones = [Phone(phone) for phone in record_data["phones"]]
             address_book[record_name] = record
         return address_book

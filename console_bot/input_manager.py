@@ -3,6 +3,7 @@ from .address_book import Record, AddressBook
 from .note import NoteBook, Note
 import json
 
+
 class InputManager:
     def __init__(self):
         self.book = AddressBook()
@@ -36,6 +37,11 @@ class InputManager:
     def get_contact_phone(self, args):
         name = args[0]
         return self.book.find(name)
+
+    @input_error
+    def full_search(self, args):
+        term = args[0]
+        return self.book.find_all(term)
 
     def get_all_contacts(self):
         return "\n".join(map(str, self.book.data.values()))
@@ -83,14 +89,13 @@ class InputManager:
     def all_notes(self):
         return str(self.note_book)
 
-
     def save_to_json(self):
-        with open('result.json', "w") as fh:
+        with open("result.json", "w") as fh:
             json.dump(self.book.to_dict(), fh)
         return "Storing is done"
 
     def load_from_json(self):
-        with open('result.json', 'r') as fh:
+        with open("result.json", "r") as fh:
             json_data = json.load(fh)
             self.book = AddressBook.from_dict(json_data)
         return "Restoring is done"

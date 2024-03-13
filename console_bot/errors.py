@@ -9,4 +9,5 @@ def input_error(func):
             return "Index out of range."
         except KeyError:
             return "Name can't be found in contacts"
+
     return inner
