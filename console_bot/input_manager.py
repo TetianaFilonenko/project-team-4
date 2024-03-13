@@ -75,13 +75,15 @@ class InputManager:
 
     @input_error
     def add_contact_address(self, args):
-        name, address = args
+        name, *address_parts = args
+        address = ' '.join(address_parts)
         return self.book.add_address(name, address)
 
     @input_error
     def change_contact_address(self, args):
-        name, new_address = args
-        return self.book.change_address(name, new_address)
+        name, *address_parts = args
+        address = ' '.join(address_parts)
+        return self.book.change_address(name, address)
 
     @input_error
     def get_contact_address(self, args):
