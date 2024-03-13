@@ -3,6 +3,7 @@ from .address_book import Record, AddressBook
 from .note import NoteBook, Note
 import json
 
+
 class InputManager:
     def __init__(self):
         self.book = AddressBook()
@@ -56,6 +57,36 @@ class InputManager:
 
     def get_next_week_birthdays(self):
         return self.book.get_next_week_birthdays()
+
+    @input_error
+    def add_contact_email(self, args):
+        name, email = args
+        return self.book.add_email(name, email)
+
+    @input_error
+    def change_contact_email(self, args):
+        name, new_email = args
+        return self.book.change_email(name, new_email)
+
+    @input_error
+    def get_contact_email(self, args):
+        name = args[0]
+        return self.book.get_email(name)
+
+    @input_error
+    def add_contact_address(self, args):
+        name, address = args
+        return self.book.add_address(name, address)
+
+    @input_error
+    def change_contact_address(self, args):
+        name, new_address = args
+        return self.book.change_address(name, new_address)
+
+    @input_error
+    def get_contact_address(self, args):
+        name = args[0]
+        return self.book.get_address(name)
 
     def generate_random_book(self):
         self.book.generate_random_data()

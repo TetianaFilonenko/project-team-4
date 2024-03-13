@@ -234,6 +234,48 @@ class AddressBook(UserDict):
 
         return get_birthdays_per_week(result)
 
+    def add_email(self, name, email):
+        if name in self.data:
+            is_valid, message = self.data[name].add_email(email)
+            return message
+        else:
+            return f"Contact {name} not found."
+
+    def change_email(self, name, new_email):
+        if name in self.data:
+            self.data[name].emails.clear()  # Assuming each contact has only one email for simplicity
+            is_valid, message = self.data[name].add_email(new_email)
+            return message
+        else:
+            return f"Contact {name} not found."
+
+    def get_email(self, name):
+        if name in self.data and self.data[name].emails:
+            return ', '.join(email.value for email in self.data[name].emails)
+        else:
+            return f"Email for contact {name} not found or not set."
+
+    def add_address(self, name, address):
+        if name in self.data:
+            is_valid, message = self.data[name].add_address(address)
+            return message
+        else:
+            return f"Contact {name} not found."
+
+    def change_address(self, name, new_address):
+        if name in self.data:
+            self.data[name].addresses.clear()  # Assuming each contact has only one address for simplicity
+            is_valid, message = self.data[name].add_address(new_address)
+            return message
+        else:
+            return f"Contact {name} not found."
+
+    def get_address(self, name):
+        if name in self.data and self.data[name].addresses:
+            return ', '.join(address.value for address in self.data[name].addresses)
+        else:
+            return f"Address for contact {name} not found or not set."
+        
     def delete(self, name: str):
         del self.data[name]
 
