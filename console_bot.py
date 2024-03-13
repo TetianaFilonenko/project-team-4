@@ -1,6 +1,7 @@
 """Module providing a function printing bot messages."""
 
 from console_bot.input_manager import InputManager
+from console_bot.address_book import AddressBook 
 
 
 def print_help():
@@ -37,6 +38,7 @@ Available commands:
 
 
 def main():
+    print(AddressBook.check_today_birthdays)
     """Central function printing all the commands"""
     input_manager = InputManager()
     print("Welcome to the assistant bot!")
