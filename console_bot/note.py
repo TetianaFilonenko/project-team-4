@@ -1,10 +1,14 @@
 """Module providing classes and functions for working with notes"""
+
 from collections import UserList
+
 
 class Note:
     """Class representing a note"""
+
     def __init__(self, value):
         self.value = value
+
     def __str__(self):
         return str(self.value)
 
@@ -19,13 +23,14 @@ class Note:
             raise ValueError("New value cannot be None or empty")
         self.__value = new_value
 
-
     def to_dict(self):
         """Convert note to dictionary."""
-        return {'value': self.value}
+        return {"value": self.value}
+
 
 class NoteBook(UserList):
     """Class representing a notebook - list of notes"""
+
     def __init__(self):
         super().__init__()
 
@@ -41,7 +46,7 @@ class NoteBook(UserList):
             if keyword in note.value:
                 found_notes.append(note)
 
-        return '\n'.join(f"{index}: {note}" for index, note in enumerate(found_notes))
+        return "\n".join(f"{index}: {note}" for index, note in enumerate(found_notes))
 
     def edit_note(self, index, new_value):
         """Function to edit a note at a specific index."""
@@ -50,7 +55,6 @@ class NoteBook(UserList):
             return "Note was changed"
         else:
             raise IndexError("Index out of range")
-
 
     def delete_note(self, index):
         """Function to delete a note at a specific index."""
@@ -62,7 +66,7 @@ class NoteBook(UserList):
 
     def __str__(self):
         """Convert notebook to string."""
-        return '\n'.join(f"{index}: {note}" for index, note in enumerate(self.data))
+        return "\n".join(f"{index}: {note}" for index, note in enumerate(self.data))
 
     def to_dict(self):
         """Convert notebook to a list of dictionaries."""
