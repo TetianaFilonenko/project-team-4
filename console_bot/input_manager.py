@@ -1,7 +1,6 @@
 from .errors import input_error
-from .address_book import Record, AddressBook
 from .note import NoteBook, Note
-from .address_book import Record, AddressBook, Phone
+from .address_book import Record, AddressBook
 import json
 
 
@@ -112,7 +111,6 @@ class InputManager:
 
     def all_notes(self):
         return str(self.note_book)
-
 
     def save_to_json(self):
         with open('result.json', "w") as fh:

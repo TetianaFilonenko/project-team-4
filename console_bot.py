@@ -16,24 +16,21 @@ Available commands:
   email [name]                                   - Retrieves the email for the specified contact.
   add-address [name] [address]                   - Adds an address to the specified contact.
   change-address [name] [old-address] [address]  - Changes the address for the specified contact.
-  address [name]                 - Retrieves the address for the specified contact.
-  all                            - Displays all contacts in the system.
-  help                           - Shows this help message.
-  add-birthday [name] [birthday] - Adds birthday to the contact.
-  show-birthday [name]           - Shows birthday for specific contact.
-  birthdays                      - Shows birthdays for all contacts celebrating next week.
-  add-birthday [name] [birthday] - Adds birthday to the contact
-  show-birthday [name]           - Shows birthday for specific contact
-  birthdays                      - Shows birthdays for all contacts celebrating next week
-  add-note                       - Adds note to Note Book.
-  find-notes                     - Search notes by keywords.
-  delete-note                    - Delete note by index in Note Book.
-  edit-note                      - Edit note by index in Note Book.
-  all-notes                      - Show all notes in Note Book.
-  close/exit                     - Exits the program.
-  save                           - Store current book to json file with name result.json.
-  restore                        - Restore book from result.json.
-  random-book                    - Generate random book with 10 contacts.
+  address [name]                                 - Retrieves the address for the specified contact.
+  all                                            - Displays all contacts in the system.
+  help                                           - Shows this help message.
+  add-birthday [name] [birthday]                 - Adds birthday to the contact
+  show-birthday [name]                           - Shows birthday for specific contact
+  birthdays                                      - Shows birthdays for all contacts celebrating next week
+  add-note                                       - Adds note to Note Book.
+  find-notes                                     - Search notes by keywords.
+  delete-note                                    - Delete note by index in Note Book.
+  edit-note                                      - Edit note by index in Note Book.
+  all-notes                                      - Show all notes in Note Book.
+  close/exit                                     - Exits the program.
+  save                                           - Store current book to json file with name result.json.
+  restore                                        - Restore book from result.json.
+  random-book                                    - Generate random book with 10 contacts.
 """
     print(help_text)
 
