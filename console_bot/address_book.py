@@ -2,8 +2,7 @@ from collections import UserDict
 import re
 from faker import Faker
 from datetime import datetime
-from .birthdays_per_week import get_birthdays_per_week
-
+from .birthdays_per_week import get_birthdays_per_week, get_birthdays_in_next_days
 
 class Field:
     def __init__(self, value):
@@ -254,6 +253,14 @@ class AddressBook(UserDict):
         ]
 
         return get_birthdays_per_week(result)
+    
+    def get_birthdays_for_amount_days(self, days):
+        result = [
+            {"name": key, "birthday": value.birthday.value}
+            for key, value in self.items() if value and value.birthday
+        ]
+
+        return get_birthdays_in_next_days(result, days)
 
     def add_email(self, name, email):
         if name in self.data:

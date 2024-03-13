@@ -22,6 +22,7 @@ Available commands:
   add-birthday [name] [birthday]                 - Adds birthday to the contact
   show-birthday [name]                           - Shows birthday for specific contact
   birthdays                                      - Shows birthdays for all contacts celebrating next week
+  birthdays-for [days]                           - Shows birthdays for all contacts celebrating in the next amount of days
   add-note                                       - Adds note to Note Book.
   find-notes                                     - Search notes by keywords.
   delete-note                                    - Delete note by index in Note Book.
@@ -78,6 +79,8 @@ def main():
             print(input_manager.show_birthday(args))
         elif command == "birthdays":
             print(input_manager.get_next_week_birthdays())
+        elif command == "birthdays-for":
+            print(input_manager.get_birthdays_for_amount_days(args))
         elif command == "random-book":
             print(input_manager.generate_random_book())
         elif command == "add-note":

@@ -53,6 +53,10 @@ class InputManager:
 
     def get_next_week_birthdays(self):
         return self.book.get_next_week_birthdays()
+    
+    def get_birthdays_for_amount_days(self, args):
+        days = args[0]
+        return self.book.get_birthdays_for_amount_days(days)
 
     @input_error
     def add_contact_email(self, args):

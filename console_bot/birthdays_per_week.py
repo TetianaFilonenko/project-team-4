@@ -21,6 +21,26 @@ def get_birthdays_per_week(users):
         return "No birthdays next week"
     return "\n".join([f"{date}: {(',').join(people)}" for date, people in result.items()])
 
+# Print users for 'users' list that have birthdays in the next number of days
+def get_birthdays_in_next_days(users, days):
+    current_date = datetime.today().date()
+    result = defaultdict(list)
+    for user in users:
+        user_name = user["name"]
+        user_birthday = user["birthday"].date()
+        birthday_this_year = prepare_birthday_date(current_date, user_birthday)
+        delta_days = (birthday_this_year - current_date).days
+        if delta_days < int(days):
+            result_dates(result, user_name, birthday_this_year)
+    if not result:
+        return f"No birthdays in next {days} days"
+    return "\n".join([f"{date}: {(',').join(people)}" for date, people in result.items()])
+
+
+def result_dates(result, user_name, birthday_this_year):
+    day_date = birthday_this_year.strftime('%d %B')
+    result[day_date].append(user_name)
+
 
 def update_result(result, user_name, birthday_this_year):
     day_string = birthday_this_year.strftime('%A')
@@ -43,9 +63,17 @@ def prepare_birthday_date(current_date, user_birthday):
 
 if __name__ == "__main__":
     print(get_birthdays_per_week([
-        {"name": "Bill Gates", "birthday": datetime(1981, 2, 11)},
-        {"name": "Steve Jobs", "birthday": datetime(1982, 2, 11)},
-        {"name": "Tim Cook", "birthday": datetime(1991, 2, 12)},
-        {"name": "Jef Bezos", "birthday": datetime(1992, 2, 17)},  # needs to be added to the list next week
+        {"name": "Bill Gates", "birthday": datetime(1981, 3, 14)},
+        {"name": "Steve Jobs", "birthday": datetime(1982, 3, 17)},
+        {"name": "Tim Cook", "birthday": datetime(1991, 3, 17)},
+        {"name": "Jef Bezos", "birthday": datetime(1992, 5, 13)},  # needs to be added to the list next week
         {"name": "Mark Zucherberg", "birthday": datetime(1983, 2, 10)},
     ]))
+
+    print(get_birthdays_in_next_days([
+        {"name": "Bill Gates", "birthday": datetime(1981, 3, 14)},
+        {"name": "Steve Jobs", "birthday": datetime(1982, 3, 17)},
+        {"name": "Tim Cook", "birthday": datetime(1991, 3, 17)},
+        {"name": "Jef Bezos", "birthday": datetime(1992, 5, 13)},  # needs to be added to the list next week
+        {"name": "Mark Zucherberg", "birthday": datetime(1983, 2, 10)},
+    ], 720))
