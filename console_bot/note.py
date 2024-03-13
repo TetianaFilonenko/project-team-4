@@ -8,6 +8,18 @@ class Note:
     def __str__(self):
         return str(self.value)
 
+    @property
+    def value(self):
+        """Value getter."""
+        return self.__value
+
+    @value.setter
+    def value(self, new_value):
+        if new_value.strip() == "":
+            raise ValueError("New value cannot be None or empty")
+        self.__value = new_value
+
+
     def to_dict(self):
         """Convert note to dictionary."""
         return {'value': self.value}
