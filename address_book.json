@@ -1,1 +1,1 @@
-{"John": {"name": "John", "birthday": "", "phones": ["1234567890"], "emails": ["john.doe@gmail.com"], "addresses": ["Kyiv"]}, "Jenni": {"name": "Jenni", "birthday": "21.03.1993", "phones": ["1234567890"], "emails": [], "addresses": []}}
+{"John": {"name": "John", "birthday": "", "phones": ["1234432112"], "emails": ["test@GMAIL.COM"], "addresses": ["Odesa"]}, "Jenni": {"name": "Jenni", "birthday": "21.03.1993", "phones": ["1234567890"], "emails": [], "addresses": []}}

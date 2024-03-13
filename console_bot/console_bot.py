@@ -3,45 +3,114 @@
 from .input_manager import InputManager
 from .address_book import AddressBook
 from .edit import edit_record
+from rich.console import Console
+from rich.table import Table
+from rich import box
+from rich.align import Align
+from rich.live import Live
 from prompt_toolkit import PromptSession
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from prompt_toolkit.history import InMemoryHistory
 from prompt_toolkit.styles import Style
+import time
+from contextlib import contextmanager
+
+
+console = Console()
+BEAT_TIME = 0.04
+
+
+@contextmanager
+def beat(length: int = 1) -> None:
+    yield
+    time.sleep(length * BEAT_TIME)
 
 
 def print_help():
-    """Function printing help message for bot."""
-    help_text = """
-Available commands (->/right click is used for autocomplete a command):
-  hello                                          - Ask the bot how it can help you.
-  add [name] [phone]                             - Adds a contact with the specified name and phone number. Email and address can be added using separate commands.
-  change [name] [old-phone] [phone]              - Changes the phone number for the specified contact.
-  phone [name]                                   - Retrieves the phone number for the specified contact.
-  search [term]                                  - Global search, retrives any matches in any contact's fields.
-  add-email [name] [email]                       - Adds an email to the specified contact.
-  change-email [name] [old-email ][email]        - Changes the email for the specified contact.
-  email [name]                                   - Retrieves the email for the specified contact.
-  add-address [name] [address]                   - Adds an address to the specified contact.
-  change-address [name] [old-address] [address]  - Changes the address for the specified contact.
-  address [name]                                 - Retrieves the address for the specified contact.
-  all                                            - Displays all contacts in the system.
-  help                                           - Shows this help message.
-  add-birthday [name] [birthday]                 - Adds birthday to the contact
-  show-birthday [name]                           - Shows birthday for specific contact
-  birthdays                                      - Shows birthdays for all contacts celebrating next week
-  birthdays-for [days]                           - Shows birthdays for all contacts celebrating in the next amount of days
-  add-note                                       - Adds note to Note Book.
-  find-notes                                     - Search notes by keywords.
-  delete-note                                    - Delete note by index in Note Book.
-  edit-note                                      - Edit note by index in Note Book.
-  all-notes                                      - Show all notes in Note Book.
-  close/exit                                     - Exits the program.
-  random-book                                    - Generate random book with 10 contacts.
-  random-note                                    - Generate random note from Taras Hryhorovych Shevchenko poem
-  edit [fieldname] [name]                        - Edit/Delete phone, email, address.
-"""
-    print(help_text)
+    table = Table(title="Available commands:")
+    table.box = box.SIMPLE_HEAD
+    table.border_style = "bright_yellow"
+    table.header_style = "bold bright_blue"
+    table_centered = Align.left(table)
+    console.clear()
+    with Live(table_centered, console=console, screen=False, refresh_per_second=20):
+        with beat(10):
+            table.add_column("Name", style="magenta")
+            table.add_column("Description", style="green")
+        with beat(10):
+            table.add_row("hello", ":wave: Ask the bot how it can help you.")
+            table.add_row("help", "Shows this help message.")
+            table.add_row("close/exit", "Exits the program.")
 
+        with beat(10):
+            table.add_row(
+                "add \[name] \[phone]",
+                ":telephone_receiver: Adds a contact with the specified name and phone number. Email and address can be added using separate commands.",
+            )
+            table.add_row(
+                "change \[name] \[old-phone] \[phone]",
+                ":telephone_receiver: Changes the phone number for the specified contact.",
+            )
+            table.add_row(
+                "phone \[name]",
+                ":telephone_receiver: Retrieves the phone number for the specified contact.",
+            )
+            table.add_row(
+                "search \[term]",
+                ":magnifying_glass_tilted_left: Global search, retrives any matches in any contact's fields.",
+            )
+        with beat(10):
+            table.add_row(
+                "add-email \[name] \[email]",
+                ":e-mail: Adds an email to the specified contact.",
+            )
+            table.add_row(
+                "change-email \[name] \[old-email] \[email]",
+                ":e-mail: Changes the email for the specified contact.",
+            )
+            table.add_row(
+                "email \[name]",
+                ":e-mail: Retrieves the email for the specified contact.",
+            )
+            table.add_row(
+                "add-address \[name] \[address]",
+                ":house_with_garden: Adds an address to the specified contact.",
+            )
+            table.add_row(
+                "change-address \[name] \[old-address] \[address]",
+                ":house_with_garden: Changes the address for the specified contact.",
+            )
+            table.add_row(
+                "address \[name]",
+                ":house_with_garden: Retrieves the address for the specified contact.",
+            )
+            table.add_row("edit \[fieldname] \[name]", "Edit/Delete phone, email, address.")
+            table.add_row("all", "Displays all contacts in the system.")
+            table.add_row("random-book", "Generate random book with 10 contacts.")
+        with beat(10):
+            table.add_row(
+                "add-birthday \[name] \[birthday]", "Adds birthday to the contact."
+            )
+            table.add_row(
+                "show-birthday \[name]", "Shows birthday for specific contact."
+            )
+            table.add_row(
+                "birthdays", "Shows birthdays for all contacts celebrating next week."
+            )
+        with beat(10):
+            table.add_row("add-note", ":spiral_notepad: Adds note to Note Book.")
+            table.add_row("find-notes", ":spiral_notepad: Searches notes by keywords.")
+            table.add_row(
+                "delete-note", ":spiral_notepad: Deletes note by index in Note Book."
+            )
+            table.add_row(
+                "change-note", ":spiral_notepad: Changes note by index in Note Book."
+            )
+            table.add_row("all-notes", ":spiral_notepad: Shows all notes in Note Book.")
+            table.add_row(
+                "random-note",
+                ":spiral_notepad: Generates random note from Taras Hryhorovych Shevchenko poem",
+            )
 
 commands = [
     "hello",
@@ -63,7 +132,7 @@ commands = [
     "add-note",
     "find-notes",
     "delete-note",
-    "edit-note",
+    "change-note",
     "all-notes",
     "close",
     "exit",
@@ -147,7 +216,7 @@ def main():
         elif command == "delete-note":
             index = input("Enter index of note you want to remove: ")
             print(input_manager.delete_note(index))
-        elif command == "edit-note":
+        elif command == "change-note":
             index = input("Enter index of note you want to change: ")
             new_note = input("Enter a new note: ")
             print(input_manager.edit_note(index, new_note))
@@ -156,7 +225,7 @@ def main():
         elif command == "random-note":
             print_note(input_manager.random_note())
         elif command == "edit":
-            edit_record(args)
+            edit_record(input_manager, args)
         else:
             print("Invalid command.")
         input_manager.save_to_json()
