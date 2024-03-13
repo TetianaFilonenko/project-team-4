@@ -2,7 +2,30 @@ from .errors import input_error
 from .note import NoteBook, Note
 from .address_book import Record, AddressBook
 import json
+import os
 
+class AddressBook(UserDict): 
+    def save_to_file(self, filename): 
+        with open(filename, 'w') as file:
+            json.dump(self.to_dict(), file)
+
+    @classmethod
+    def load_from_file(cls, filename):
+        if os.path.exists(filename):
+            with open(filename, 'r') as file:
+                data = json.load(file)
+            return cls.from_dict(data)
+        else:
+            return cls()
+        
+# Приклад використання:
+address_book = AddressBook()
+address_book.generate_random_data()
+address_book.save_to_file('address_book.json')
+
+# Після перезапуску програми:
+address_book_loaded = AddressBook.load_from_file('address_book.json') #зберігає дані контактної книги у файл address_book.json
+print(address_book_loaded)
 
 class InputManager:
     def __init__(self):
