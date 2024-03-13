@@ -1,7 +1,8 @@
 from .errors import input_error
-from .address_book import Record, AddressBook
 from .note import NoteBook, Note
+from .address_book import Record, AddressBook
 import json
+
 
 class InputManager:
     def __init__(self):
@@ -25,12 +26,8 @@ class InputManager:
 
     @input_error
     def change_contact(self, args):
-        name, new_phone = args
-        new_record = Record(name)
-        isvalid, message = new_record.add_phone(new_phone)
-        if isvalid:
-            self.book.add_contact(new_record, override=True)
-        return message
+        name, old_phone, new_phone = args
+        return self.book.change_contact(name, old_phone, new_phone)
 
     @input_error
     def get_contact_phone(self, args):
@@ -57,6 +54,38 @@ class InputManager:
     def get_next_week_birthdays(self):
         return self.book.get_next_week_birthdays()
 
+    @input_error
+    def add_contact_email(self, args):
+        name, email = args
+        return self.book.add_email(name, email)
+
+    @input_error
+    def change_contact_email(self, args):
+        name, old_email, new_email = args
+        return self.book.change_email(name, old_email, new_email)
+
+    @input_error
+    def get_contact_email(self, args):
+        name = args[0]
+        return self.book.get_email(name)
+
+    @input_error
+    def add_contact_address(self, args):
+        name, *address_parts = args
+        address = ' '.join(address_parts)
+        return self.book.add_address(name, address)
+
+    @input_error
+    def change_contact_address(self, args, new_address):
+        name, *address_parts = args
+        old_address = ' '.join(address_parts)
+        return self.book.change_address(name, old_address, new_address)
+
+    @input_error
+    def get_contact_address(self, args):
+        name = args[0]
+        return self.book.get_address(name)
+
     def generate_random_book(self):
         self.book.generate_random_data()
         return self.get_all_contacts()
@@ -82,7 +111,6 @@ class InputManager:
 
     def all_notes(self):
         return str(self.note_book)
-
 
     def save_to_json(self):
         with open('result.json', "w") as fh:
