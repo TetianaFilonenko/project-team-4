@@ -14,11 +14,11 @@ Available commands:
   add-birthday [name] [birthday] - Adds birthday to the contact
   show-birthday [name]           - Shows birthday for specific contact
   birthdays                      - Shows birthdays for all contacts celebrating next week
-  add-note
-  find-notes
-  delete-note
-  edit-note
-  all-notes
+  add-note                       - Adds note to Note Book.
+  find-notes                     - Search notes by keywords.
+  delete-note                    - Delete note by index in Note Book.
+  edit-note                      - Edit note by index in Note Book.
+  all-notes                      - Show all notes in Note Book.
   close/exit                     - Exits the program.
   save                           - Store current book to json file with name result.json
   restore                        - Restore book from result.json
