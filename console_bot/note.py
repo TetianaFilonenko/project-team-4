@@ -66,7 +66,7 @@ class NoteBook(UserList):
 
     def __str__(self):
         """Convert notebook to string."""
-        return "\n".join(f"{index}: {note}" for index, note in enumerate(self.data))
+        return "\n".join(f"{index}: {note}" for index, note in enumerate(sorted(self.data, key=lambda x: x.value)))
 
     def to_dict(self):
         """Convert notebook to a list of dictionaries."""
