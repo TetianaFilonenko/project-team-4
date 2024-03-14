@@ -36,6 +36,7 @@ Available commands (->/right click is used for autocomplete a command):
   all-notes                                      - Show all notes in Note Book.
   close/exit                                     - Exits the program.
   random-book                                    - Generate random book with 10 contacts.
+  random-note                                    - Generate random note from Taras Hryhorovych Shevchenko poem
 """
     print(help_text)
 
@@ -149,6 +150,9 @@ def main():
             print(input_manager.edit_note(index, new_note))
         elif command == "all-notes":
             print(input_manager.all_notes())
+        elif command == "random-note":
+            for line in input_manager.random_note().split('\\n'):
+                print(line)
         else:
             print("Invalid command.")
         input_manager.save_to_json()
