@@ -6,7 +6,6 @@ import os
 import random
 
 
-
 class Note:
     """Class representing a note"""
 
@@ -69,7 +68,10 @@ class NoteBook(UserList):
         else:
             raise IndexError("Index out of range.")
 
-    def generate_random(self, save = True):
+    def generate_random(self, save=True):
+        """
+        Generate a random note and add it to the notebook.
+        """
         with open("console_bot/quotes.txt", "r") as file:
             poems = file.readlines()
         poem = random.choice(poems).strip()  # Randomly select a poem from the list
