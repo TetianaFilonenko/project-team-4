@@ -6,8 +6,8 @@ import json
 
 class InputManager:
     def __init__(self):
-        self.book = AddressBook()
-        self.note_book = NoteBook()
+        self.book = AddressBook.load_from_file('address_book.json')
+        self.note_book = NoteBook.load_from_file('note_book.json')
 
     @input_error
     def parse_input(self, user_input):

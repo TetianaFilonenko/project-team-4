@@ -1,7 +1,8 @@
 """Module providing classes and functions for working with notes"""
 
 from collections import UserList
-
+import json
+import os
 
 class Note:
     """Class representing a note"""
@@ -68,6 +69,21 @@ class NoteBook(UserList):
         """Convert notebook to string."""
         return "\n".join(f"{index}: {note}" for index, note in enumerate(self.data))
 
-    def to_dict(self):
+    def to_list(self):
         """Convert notebook to a list of dictionaries."""
         return [note.to_dict() for note in self.data]
+    
+    def from_list()
+    
+    @classmethod
+    def load_from_file(cls, filename):
+        if os.path.exists(filename):
+            with open(filename, 'r') as file:
+                data = json.load(file)
+            return cls.from_dict(data)
+        else:
+            return cls()
+
+    def save_to_file(self, filename): 
+        with open(filename, 'w') as file:
+            json.dump(self.to_list(), file)
