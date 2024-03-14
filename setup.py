@@ -8,6 +8,7 @@ setup(name='console_bot',
       author_email='flyingcircus@example.com',
       license='MIT',
       packages= find_namespace_packages(),
-      install_requires= ['faker'],
+      install_requires= ['faker', 'prompt_toolkit'],
       include_package_data=True
+      entry_points= { 'console_scripts': ["console-bot = console_bot"]}
       )
