@@ -2,12 +2,16 @@
 
 from console_bot.input_manager import InputManager
 from console_bot.address_book import AddressBook
+from prompt_toolkit import PromptSession
+from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
+from prompt_toolkit.history import InMemoryHistory
+from prompt_toolkit.styles import Style
 
 
 def print_help():
     """Function printing help message for bot."""
     help_text = """
-Available commands:
+Available commands (->/right click is used for autocomplete a command):
   hello                                          - Ask the bot how it can help you.
   add [name] [phone]                             - Adds a contact with the specified name and phone number. Email and address can be added using separate commands.
   change [name] [old-phone] [phone]              - Changes the phone number for the specified contact.
@@ -38,15 +42,57 @@ Available commands:
     print(help_text)
 
 
+commands = [
+    "hello",
+    "add",
+    "change",
+    "phone",
+    "add-email",
+    "change-email",
+    "email",
+    "add-address",
+    "change-address",
+    "address",
+    "all",
+    "help",
+    "add-birthday",
+    "show-birthday",
+    "birthdays",
+    "random-book",
+    "add-note",
+    "find-notes",
+    "delete-note",
+    "edit-note",
+    "all-notes",
+    "close",
+    "exit",
+    "save",
+    "restore",
+]
+style = Style.from_dict({"": "#1cb649 italic bold"})
+
+
 def main():
     """Central function printing all the commands"""
     input_manager = InputManager()
+    history = InMemoryHistory()
+    for command in commands:
+        history.append_string(command)
+    session = PromptSession(
+        history=history,
+        auto_suggest=AutoSuggestFromHistory(),
+        enable_history_search=True,
+    )
     print("Welcome to the assistant bot!")
     print(AddressBook().check_today_birthdays())
 
     while True:
-        user_input = input("Enter a command: ")
-        command, *args = input_manager.parse_input(user_input)
+        try:
+            user_input = session.prompt("Enter a command: ", style=style)
+            command, *args = input_manager.parse_input(user_input)
+        except KeyboardInterrupt:
+            print("Ctrl-C pressed. Try again.")
+            continue
 
         if command in ["close", "exit"]:
             print("Good bye!")
