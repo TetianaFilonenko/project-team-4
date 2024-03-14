@@ -9,4 +9,5 @@ setup(name='console_bot',
       license='MIT',
       packages= find_namespace_packages(),
       install_requires= ['faker'],
+      include_package_data=True
       )
