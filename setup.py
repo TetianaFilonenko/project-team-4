@@ -7,4 +7,6 @@ setup(name='console_bot',
       author='Kobzar Coders',
       author_email='flyingcircus@example.com',
       license='MIT',
-      packages= find_namespace_packages())
+      packages= find_namespace_packages(),
+      install_requires= ['faker'],
+      )
