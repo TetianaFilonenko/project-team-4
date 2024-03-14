@@ -158,7 +158,10 @@ def main():
         input_manager.save_to_json()
 
 
-def print_note(text):
+def print_note(text: str):
+    """
+    Function to print a note to the console in a readable format.
+    """
     for line in text.split("\\n"):
         print(line)
 
