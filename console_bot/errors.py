@@ -1,6 +1,9 @@
 def input_error(func):
     # FIXME: message here are too specific
     def inner(*args, **kwargs):
+        """
+        Inner function to handle errors in the input.
+        """
         try:
             return func(*args, **kwargs)
         except ValueError:
