@@ -38,7 +38,7 @@ Available commands:
 
 
 def main():
-    print(AddressBook.check_today_birthdays)
+    print(AddressBook().check_today_birthdays())
     """Central function printing all the commands"""
     input_manager = InputManager()
     print("Welcome to the assistant bot!")
