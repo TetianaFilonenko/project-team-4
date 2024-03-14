@@ -84,6 +84,7 @@ def main():
     )
     print("Welcome to the assistant bot!")
     print(AddressBook().check_today_birthdays())
+    print_note(input_manager.random_note(save=False))
 
     while True:
         try:
@@ -151,11 +152,15 @@ def main():
         elif command == "all-notes":
             print(input_manager.all_notes())
         elif command == "random-note":
-            for line in input_manager.random_note().split('\\n'):
-                print(line)
+            print_note(input_manager.random_note())
         else:
             print("Invalid command.")
         input_manager.save_to_json()
+
+
+def print_note(text):
+    for line in text.split("\\n"):
+        print(line)
 
 
 if __name__ == "__main__":

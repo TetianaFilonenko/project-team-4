@@ -120,8 +120,8 @@ class InputManager:
     def all_notes(self):
         return str(self.note_book)
 
-    def random_note(self):
-        return self.note_book.generate_random()
+    def random_note(self, save=True):
+        return self.note_book.generate_random(save)
 
     def save_to_json(self):
         self.book.save_to_file()

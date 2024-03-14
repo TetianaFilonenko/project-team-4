@@ -67,12 +67,13 @@ class NoteBook(UserList):
         else:
             raise IndexError("Index out of range.")
 
-    def generate_random(self):
+    def generate_random(self, save = True):
         with open("console_bot/quotes.txt", "r") as file:
             poems = file.readlines()
         poem = random.choice(poems).strip()  # Randomly select a poem from the list
         note = Note(poem)
-        self.add_note(note)
+        if save:
+            self.add_note(note)
         return note.value
 
     def __str__(self):
