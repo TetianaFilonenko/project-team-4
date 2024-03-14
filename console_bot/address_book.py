@@ -313,6 +313,10 @@ class AddressBook(UserDict):
 
     def to_dict(self):
         return {key: value.to_dict() for key, value in self.data.items()}
+    
+    def save_to_file(self, filename): 
+        with open(filename, 'w') as file:
+            json.dump(self.to_dict(), file)
 
     @classmethod
     def from_dict(cls, dict_data):
@@ -324,3 +328,12 @@ class AddressBook(UserDict):
             record.phones = [Phone(phone) for phone in record_data['phones']]
             address_book[record_name] = record
         return address_book
+    
+    @classmethod
+    def load_from_file(cls, filename):
+        if os.path.exists(filename):
+            with open(filename, 'r') as file:
+                data = json.load(file)
+            return cls.from_dict(data)
+        else:
+            return cls()

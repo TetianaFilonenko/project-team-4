@@ -4,34 +4,10 @@ from .address_book import Record, AddressBook
 import json
 import os
 
-class AddressBook(UserDict): 
-    def save_to_file(self, filename): 
-        with open(filename, 'w') as file:
-            json.dump(self.to_dict(), file)
-
-    @classmethod
-    def load_from_file(cls, filename):
-        if os.path.exists(filename):
-            with open(filename, 'r') as file:
-                data = json.load(file)
-            return cls.from_dict(data)
-        else:
-            return cls()
-        
-# Приклад використання:
-address_book = AddressBook()
-address_book.generate_random_data()
-address_book.save_to_file('address_book.json')
-
-# Після перезапуску програми:
-address_book_loaded = AddressBook.load_from_file('address_book.json') #зберігає дані контактної книги у файл address_book.json
-print(address_book_loaded)
-
-
 class InputManager:
     def __init__(self):
-        self.book = AddressBook()
-        self.note_book = NoteBook()
+        self.book = AddressBook.load_from_file('address_book.json')
+        self.note_book = NoteBook.load_from_file('note_book.json')
 
     @input_error
     def parse_input(self, user_input):
@@ -46,6 +22,7 @@ class InputManager:
         isvalid, message = new_record.add_phone(phone)
         if isvalid:
             self.book.add_contact(new_record)
+            self.book.save_to_file('address_book.json') #додає збереження у файл після успішного додавання змін
         return message
 
     @input_error
@@ -68,6 +45,7 @@ class InputManager:
         isvalid, message = new_record.add_birthday(birthday)
         if isvalid:
             self.book.add_birthday(new_record)
+            self.book.save_to_file('address_book.json') #додає збереження у файл після успішного додавання змін
         return message
 
     @input_error
@@ -81,12 +59,18 @@ class InputManager:
     @input_error
     def add_contact_email(self, args):
         name, email = args
-        return self.book.add_email(name, email)
+        result = self.book.add_email(name, email)
+        if result:  # перевірте, чи вдалося додати електронну адресу
+            message = self.book.save_to_file('address_book.json')  # зберігає дані після успішного додавання електронної адреси
+        return result, message
 
     @input_error
     def change_contact_email(self, args):
         name, old_email, new_email = args
-        return self.book.change_email(name, old_email, new_email)
+        result = self.book.change_email(name, old_email, new_email)
+        if result:
+           message = self.book.save_to_file('address_book.json')
+        return result, message
 
     @input_error
     def get_contact_email(self, args):
@@ -116,7 +100,6 @@ class InputManager:
 
     @input_error
     def add_note(self, value):
-        # TODO add validation of presence
         return self.note_book.add_note(Note(value))
 
     @input_error
@@ -147,4 +130,3 @@ class InputManager:
             self.book = AddressBook.from_dict(json_data)
         return "Restoring is done"
     
-
