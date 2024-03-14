@@ -6,8 +6,8 @@ import json
 
 class InputManager:
     def __init__(self):
-        self.book = AddressBook()
-        self.note_book = NoteBook()
+        self.book = AddressBook.load_from_file('address_book.json')
+        self.note_book = NoteBook.load_from_file('note_book.json')
 
     @input_error
     def parse_input(self, user_input):
@@ -33,7 +33,7 @@ class InputManager:
     def get_contact_phone(self, args):
         name = args[0]
         return self.book.find(name)
-    
+
     @input_error
     def full_search(self, args):
         term = args[0]
@@ -122,12 +122,5 @@ class InputManager:
         return str(self.note_book)
 
     def save_to_json(self):
-        with open("result.json", "w") as fh:
-            json.dump(self.book.to_dict(), fh)
-        return "Storing is done"
-
-    def load_from_json(self):
-        with open("result.json", "r") as fh:
-            json_data = json.load(fh)
-            self.book = AddressBook.from_dict(json_data)
-        return "Restoring is done"
+        self.book.save_to_file()
+        self.note_book.save_to_file()
