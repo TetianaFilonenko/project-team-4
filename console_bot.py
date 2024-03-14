@@ -46,6 +46,7 @@ commands = [
     "add",
     "change",
     "phone",
+    "search",
     "add-email",
     "change-email",
     "email",
@@ -57,7 +58,6 @@ commands = [
     "add-birthday",
     "show-birthday",
     "birthdays",
-    "random-book",
     "add-note",
     "find-notes",
     "delete-note",
@@ -65,8 +65,8 @@ commands = [
     "all-notes",
     "close",
     "exit",
-    "save",
-    "restore",
+    "random-book",
+    "random-note",
 ]
 style = Style.from_dict({"": "#1cb649 italic bold"})
 
