@@ -142,7 +142,6 @@ def main():
             keyword = input("Enter searching keyword: ")
             print(input_manager.find_notes(keyword))
         elif command == "delete-note":
-            # TODO: add option to delete by name
             index = input("Enter index of note you want to remove: ")
             print(input_manager.delete_note(index))
         elif command == "edit-note":
