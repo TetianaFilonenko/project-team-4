@@ -47,8 +47,7 @@ def get_today_birthday(users):
             result['Today'].append(user_name)
     if not result:
         return 'Today there is no birthdays'
-    return '\n'.join([f'Don`t forget to congratulate: {(',').join(people)}' for people in result.values()])
-
+    return '\n'.join([f"Don't forget to congratulate: {', '.join(people)}" for people in result.values()])
 
 def result_dates(result, user_name, birthday_this_year):
     day_date = birthday_this_year.strftime('%d %B')
@@ -92,8 +91,8 @@ if __name__ == "__main__":
     ], 1))
     print(get_today_birthday([
         {"name": "Bill Gates", "birthday": datetime(1981, 3, 14)},
-        {"name": "Steve Jobs", "birthday": datetime(1982, 3, 15)},
+        {"name": "Steve Jobs", "birthday": datetime(1982, 3, 14)},
         {"name": "Tim Cook", "birthday": datetime(1991, 3, 17)},
         {"name": "Jef Bezos", "birthday": datetime(1992, 5, 13)},  # needs to be added to the list next week
         {"name": "Mark Zucherberg", "birthday": datetime(1983, 2, 10)},
-    ]))
+              ]))
