@@ -35,8 +35,6 @@ Available commands (->/right click is used for autocomplete a command):
   edit-note                                      - Edit note by index in Note Book.
   all-notes                                      - Show all notes in Note Book.
   close/exit                                     - Exits the program.
-  save                                           - Store current book to json file with name result.json.
-  restore                                        - Restore book from result.json.
   random-book                                    - Generate random book with 10 contacts.
 """
     print(help_text)
@@ -96,6 +94,7 @@ def main():
 
         if command in ["close", "exit"]:
             print("Good bye!")
+            input_manager.save_to_json()
             break
         elif command == "hello":
             print("How can I help you?")
@@ -150,12 +149,9 @@ def main():
             print(input_manager.edit_note(index, new_note))
         elif command == "all-notes":
             print(input_manager.all_notes())
-        elif command == "save":
-            print(input_manager.save_to_json())
-        elif command == "restore":
-            print(input_manager.load_from_json())
         else:
             print("Invalid command.")
+        input_manager.save_to_json()
 
 
 if __name__ == "__main__":

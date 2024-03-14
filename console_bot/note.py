@@ -72,18 +72,25 @@ class NoteBook(UserList):
     def to_list(self):
         """Convert notebook to a list of dictionaries."""
         return [note.to_dict() for note in self.data]
-    
-    def from_list()
-    
+
     @classmethod
-    def load_from_file(cls, filename):
+    def from_list(cls, data):
+        note_book = cls()
+        for el in data:
+            note = Note(el["value"])
+            note_book.data.append(note)
+        return note_book
+
+
+    @classmethod
+    def load_from_file(cls, filename="note_book.json"):
         if os.path.exists(filename):
             with open(filename, 'r') as file:
                 data = json.load(file)
-            return cls.from_dict(data)
+            return cls.from_list(data)
         else:
             return cls()
 
-    def save_to_file(self, filename): 
+    def save_to_file(self, filename='note_book.json'):
         with open(filename, 'w') as file:
             json.dump(self.to_list(), file)

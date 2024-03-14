@@ -10,6 +10,7 @@ from .birthdays_per_week import (
 import json
 import os
 
+
 class Field:
     def __init__(self, value):
         self.value = value
@@ -257,7 +258,7 @@ class AddressBook(UserDict):
     def find(self, name: str):
         for key, value in filter(lambda el: name == el[0], self.items()):
             return f"Found record with name: '{key}'. \nResult: {str(value)}"
-        
+
     def find_all(self, term: str):
         res = ""
         res1 = self.find(term)
@@ -410,18 +411,22 @@ class AddressBook(UserDict):
             if len(record_data["birthday"]) > 0:
                 record.birthday = Birthday(record_data["birthday"])
             record.phones = [Phone(phone) for phone in record_data["phones"]]
+            record.addresses = [
+                Address(address) for address in record_data["addresses"]
+            ]
+            record.emails = [Email(email) for email in record_data["emails"]]
             address_book[record_name] = record
         return address_book
-    
+
     @classmethod
-    def load_from_file(cls, filename):
+    def load_from_file(cls, filename="address_book.json"):
         if os.path.exists(filename):
-            with open(filename, 'r') as file:
+            with open(filename, "r") as file:
                 data = json.load(file)
             return cls.from_dict(data)
         else:
             return cls()
 
-    def save_to_file(self, filename): 
-        with open(filename, 'w') as file:
+    def save_to_file(self, filename="address_book.json"):
+        with open(filename, "w") as file:
             json.dump(self.to_dict(), file)
