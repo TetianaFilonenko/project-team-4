@@ -1,5 +1,11 @@
+"""Module providing functions for working with Error"""
+
+
 def input_error(func):
-    # FIXME: message here are too specific
+    """
+    Decorator function to handle errors in the input.
+    """
+
     def inner(*args, **kwargs):
         """
         Inner function to handle errors in the input.

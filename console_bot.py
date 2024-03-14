@@ -30,13 +30,13 @@ Available commands (->/right click is used for autocomplete a command):
   birthdays                                      - Shows birthdays for all contacts celebrating next week
   birthdays-for [days]                           - Shows birthdays for all contacts celebrating in the next amount of days
   add-note                                       - Adds note to Note Book.
-  find-notes                                     - Search notes by keywords.
-  delete-note                                    - Delete note by index in Note Book.
-  edit-note                                      - Edit note by index in Note Book.
-  all-notes                                      - Show all notes in Note Book.
+  find-notes                                     - Searches notes by keywords.
+  delete-note                                    - Deletes note by index in Note Book.
+  change-note                                    - Changes note by index in Note Book.
+  all-notes                                      - Showes all notes in Note Book.
   close/exit                                     - Exits the program.
-  random-book                                    - Generate random book with 10 contacts.
-  random-note                                    - Generate random note from Taras Hryhorovych Shevchenko poem
+  random-book                                    - Generates random book with 10 contacts.
+  random-note                                    - Generates random note from Taras Hryhorovych Shevchenko poem
 """
     print(help_text)
 
@@ -58,6 +58,7 @@ commands = [
     "add-birthday",
     "show-birthday",
     "birthdays",
+    "birthdays-for",
     "add-note",
     "find-notes",
     "delete-note",
@@ -144,10 +145,10 @@ def main():
         elif command == "delete-note":
             index = input("Enter index of note you want to remove: ")
             print(input_manager.delete_note(index))
-        elif command == "edit-note":
+        elif command == "change-note":
             index = input("Enter index of note you want to change: ")
             new_note = input("Enter a new note: ")
-            print(input_manager.edit_note(index, new_note))
+            print(input_manager.change_note(index, new_note))
         elif command == "all-notes":
             print(input_manager.all_notes())
         elif command == "random-note":

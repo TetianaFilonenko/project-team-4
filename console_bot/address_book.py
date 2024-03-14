@@ -1,14 +1,16 @@
+"""Module providing classes and functions for working with AddressBook"""
+
 from collections import UserDict
 import re
-from faker import Faker
 from datetime import datetime
+import json
+import os
+from faker import Faker
 from .birthdays_per_week import (
     get_birthdays_per_week,
     get_birthdays_in_next_days,
     get_today_birthday,
 )
-import json
-import os
 
 
 class Field:
@@ -23,6 +25,9 @@ class Field:
         return str(self.value)
 
     def to_dict(self):
+        """
+        Convert the value of the object to a dictionary.
+        """
         return str(self.value)
 
 
@@ -33,6 +38,9 @@ class Birthday(Field):
 
     @property
     def value(self):
+        """
+        Property method to access the value attribute of the object.
+        """
         return self.__value
 
     @value.setter
@@ -70,7 +78,9 @@ class Birthday(Field):
 
 
 class Name(Field):
-    pass
+    """
+    Class representing a name field
+    """
 
 
 class Phone(Field):
@@ -80,6 +90,9 @@ class Phone(Field):
 
     @property
     def value(self):
+        """
+        Property method to access the value attribute of the object.
+        """
         return self.__value
 
     @value.setter
@@ -93,6 +106,9 @@ class Phone(Field):
             self.__value = None
 
     def is_valid(self):
+        """
+        Check if the value of the field is valid.
+        """
         return bool(self.__value)
 
 
@@ -103,6 +119,9 @@ class Email(Field):
 
     @property
     def value(self):
+        """
+        Property method to access the value attribute of the object.
+        """
         return self.__value
 
     @value.setter
@@ -116,6 +135,9 @@ class Email(Field):
             self.__value = None
 
     def is_valid(self):
+        """
+        Check if the value of the field is valid.
+        """
         return bool(self.__value)
 
 
@@ -126,6 +148,9 @@ class Address(Field):
 
     @property
     def value(self):
+        """
+        Property method to access the value attribute of the object.
+        """
         return self.__value
 
     @value.setter
@@ -139,6 +164,9 @@ class Address(Field):
             self.__value = None
 
     def is_valid(self):
+        """
+        Check if the value of the field is valid.
+        """
         return bool(self.__value)
 
 
@@ -335,9 +363,6 @@ class AddressBook(UserDict):
     Class representing an address book
     """
 
-    def __init__(self):
-        self.data = {}
-
     def find(self, name: str):
         """
         Find record by name. Return message if found.
@@ -390,7 +415,7 @@ class AddressBook(UserDict):
         Change phone in the contact. Return message if changed or not found
         """
         if name in self.data:
-            is_changed, message = self.data[name].edit_phone(old_phone, new_phone)
+            _, message = self.data[name].edit_phone(old_phone, new_phone)
             return message
         else:
             return f"Contact {name} not found. Add it first to the contact book"
@@ -459,7 +484,7 @@ class AddressBook(UserDict):
         Add email to the contact. Return message if added or not found
         """
         if name in self.data:
-            is_valid, message = self.data[name].add_email(email)
+            _, message = self.data[name].add_email(email)
             return message
         else:
             return f"Contact {name} not found. Add it first to the contact book"
@@ -469,7 +494,7 @@ class AddressBook(UserDict):
         Change email in the contact. Return message if changed or not found
         """
         if name in self.data:
-            is_changed, message = self.data[name].edit_email(old_email, new_email)
+            _, message = self.data[name].edit_email(old_email, new_email)
             return message
         else:
             return f"Contact {name} not found. Add it first to the contact book"
@@ -488,7 +513,7 @@ class AddressBook(UserDict):
         Add address to the contact. Return message if added or not found
         """
         if name in self.data:
-            is_valid, message = self.data[name].add_address(address)
+            _, message = self.data[name].add_address(address)
             return message
         else:
             return f"Contact {name} not found. Add it first to the contact book"
@@ -498,7 +523,7 @@ class AddressBook(UserDict):
         Change address in the contact. Return message if changed or not found
         """
         if name in self.data:
-            is_changed, message = self.data[name].edit_address(old_address, new_address)
+            _, message = self.data[name].edit_address(old_address, new_address)
             return message
         else:
             return f"Contact {name} not found. Add it first to the contact book"
@@ -535,6 +560,9 @@ class AddressBook(UserDict):
             self.data[name] = record
 
     def to_dict(self):
+        """
+        Convert the data dictionary to a nested dictionary.
+        """
         return {key: value.to_dict() for key, value in self.data.items()}
 
     @classmethod

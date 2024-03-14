@@ -1,4 +1,4 @@
-"""Module providing classes and functions for working with notes"""
+"""Module providing classes and functions for working with NoteBook"""
 
 from collections import UserList
 import json
@@ -105,15 +105,15 @@ class NoteBook(UserList):
         Load notebook from file.
         """
         if os.path.exists(filename):
-            with open(filename, 'r') as file:
+            with open(filename, "r") as file:
                 data = json.load(file)
             return cls.from_list(data)
         else:
             return cls()
 
-    def save_to_file(self, filename: str = 'note_book.json'):
+    def save_to_file(self, filename: str = "note_book.json"):
         """
         Save notebook to file.
         """
-        with open(filename, 'w') as file:
+        with open(filename, "w") as file:
             json.dump(self.to_list(), file)

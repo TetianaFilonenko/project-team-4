@@ -1,3 +1,7 @@
+"""
+A module for handling birthday-related functionalities.
+"""
+
 from datetime import datetime, timedelta
 from collections import defaultdict
 

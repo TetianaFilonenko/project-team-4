@@ -1,13 +1,16 @@
 from .errors import input_error
 from .note import NoteBook, Note
 from .address_book import Record, AddressBook
-import json
 
 
 class InputManager:
+    """
+    Class-delegator that stores all the input managing objects for a bot
+    """
+
     def __init__(self):
-        self.book = AddressBook.load_from_file('address_book.json')
-        self.note_book = NoteBook.load_from_file('note_book.json')
+        self.book = AddressBook.load_from_file("address_book.json")
+        self.note_book = NoteBook.load_from_file("note_book.json")
 
     @input_error
     def parse_input(self, user_input: str):
@@ -165,9 +168,9 @@ class InputManager:
         return self.note_book.find_notes(keyword)
 
     @input_error
-    def edit_note(self, index: str, new_note: str):
+    def change_note(self, index: str, new_note: str):
         """
-        Function to edit a note at a specific index.
+        Function to change a note at a specific index.
         """
         index = int(index)
         return self.note_book.edit_note(index, new_note)
@@ -187,6 +190,9 @@ class InputManager:
         return str(self.note_book)
 
     def random_note(self, save=True):
+        """
+        Function to generate a note with a random quote from Shevchenko poem.
+        """
         return self.note_book.generate_random(save)
 
     def save_to_json(self):
