@@ -3,6 +3,8 @@
 from collections import UserList
 import json
 import os
+import random
+
 
 class Note:
     """Class representing a note"""
@@ -64,6 +66,15 @@ class NoteBook(UserList):
             return "Note was deleted"
         else:
             raise IndexError("Index out of range.")
+
+    def generate_random(self, save = True):
+        with open("console_bot/quotes.txt", "r") as file:
+            poems = file.readlines()
+        poem = random.choice(poems).strip()  # Randomly select a poem from the list
+        note = Note(poem)
+        if save:
+            self.add_note(note)
+        return note.value
 
     def __str__(self):
         """Convert notebook to string."""
