@@ -58,6 +58,8 @@ def main():
             print(input_manager.change_contact(args))
         elif command == "phone":
             print(input_manager.get_contact_phone(args))
+        elif command == "search":
+            print(input_manager.full_search(args))
         elif command == "add-email":
             print(input_manager.add_contact_email(args))
         elif command == "change-email":

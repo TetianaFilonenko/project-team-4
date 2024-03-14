@@ -33,6 +33,11 @@ class InputManager:
     def get_contact_phone(self, args):
         name = args[0]
         return self.book.find(name)
+    
+    @input_error
+    def full_search(self, args):
+        term = args[0]
+        return self.book.find_all(term)
 
     def get_all_contacts(self):
         return "\n".join(map(str, self.book.data.values()))
