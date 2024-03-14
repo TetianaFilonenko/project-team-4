@@ -46,6 +46,7 @@ commands = [
     "add",
     "change",
     "phone",
+    "search",
     "add-email",
     "change-email",
     "email",
@@ -57,7 +58,6 @@ commands = [
     "add-birthday",
     "show-birthday",
     "birthdays",
-    "random-book",
     "add-note",
     "find-notes",
     "delete-note",
@@ -65,8 +65,8 @@ commands = [
     "all-notes",
     "close",
     "exit",
-    "save",
-    "restore",
+    "random-book",
+    "random-note",
 ]
 style = Style.from_dict({"": "#1cb649 italic bold"})
 
@@ -142,7 +142,6 @@ def main():
             keyword = input("Enter searching keyword: ")
             print(input_manager.find_notes(keyword))
         elif command == "delete-note":
-            # TODO: add option to delete by name
             index = input("Enter index of note you want to remove: ")
             print(input_manager.delete_note(index))
         elif command == "edit-note":
