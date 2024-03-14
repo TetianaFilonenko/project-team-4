@@ -12,6 +12,7 @@ Available commands:
   add [name] [phone]                             - Adds a contact with the specified name and phone number. Email and address can be added using separate commands.
   change [name] [old-phone] [phone]              - Changes the phone number for the specified contact.
   phone [name]                                   - Retrieves the phone number for the specified contact.
+  search [term]                                  - Global search, retrives any matches in any contact's fields.
   add-email [name] [email]                       - Adds an email to the specified contact.
   change-email [name] [old-email ][email]        - Changes the email for the specified contact.
   email [name]                                   - Retrieves the email for the specified contact.
