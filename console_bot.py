@@ -38,10 +38,10 @@ Available commands:
 
 
 def main():
-    print(AddressBook().check_today_birthdays())
     """Central function printing all the commands"""
     input_manager = InputManager()
     print("Welcome to the assistant bot!")
+    print(AddressBook().check_today_birthdays())
 
     while True:
         user_input = input("Enter a command: ")
