@@ -19,7 +19,7 @@ def get_birthdays_per_week(users):
             update_result(result, user_name, birthday_this_year)
     if not result:
         return "No birthdays next week"
-    return "\n".join([f"{date}: {(",").join(people)}" for date, people in result.items()])
+    return "\n".join([f"{date}: {(',').join(people)}" for date, people in result.items()])
 
 # Print users for 'users' list that have birthdays in the next number of days
 def get_birthdays_in_next_days(users, days):
@@ -34,7 +34,7 @@ def get_birthdays_in_next_days(users, days):
             result_dates(result, user_name, birthday_this_year)
     if not result:
         return f"No birthdays in next {days} days"
-    return "\n".join([f"{date}: {(",").join(people)}" for date, people in result.items()])
+    return "\n".join([f"{date}: {(',').join(people)}" for date, people in result.items()])
 
 def get_today_birthday(users):
     current_date = datetime.today().date()
