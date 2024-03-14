@@ -54,6 +54,10 @@ class InputManager:
     def get_next_week_birthdays(self):
         return self.book.get_next_week_birthdays()
 
+    def get_birthdays_for_amount_days(self, args):
+        days = args[0]
+        return self.book.get_birthdays_for_amount_days(days)
+
     @input_error
     def add_contact_email(self, args):
         name, email = args
@@ -72,13 +76,13 @@ class InputManager:
     @input_error
     def add_contact_address(self, args):
         name, *address_parts = args
-        address = ' '.join(address_parts)
+        address = " ".join(address_parts)
         return self.book.add_address(name, address)
 
     @input_error
     def change_contact_address(self, args, new_address):
         name, *address_parts = args
-        old_address = ' '.join(address_parts)
+        old_address = " ".join(address_parts)
         return self.book.change_address(name, old_address, new_address)
 
     @input_error
@@ -113,12 +117,12 @@ class InputManager:
         return str(self.note_book)
 
     def save_to_json(self):
-        with open('result.json', "w") as fh:
+        with open("result.json", "w") as fh:
             json.dump(self.book.to_dict(), fh)
         return "Storing is done"
 
     def load_from_json(self):
-        with open('result.json', 'r') as fh:
+        with open("result.json", "r") as fh:
             json_data = json.load(fh)
             self.book = AddressBook.from_dict(json_data)
         return "Restoring is done"

@@ -1,6 +1,7 @@
 """Module providing a function printing bot messages."""
 
 from console_bot.input_manager import InputManager
+from console_bot.address_book import AddressBook
 
 
 def print_help():
@@ -22,6 +23,7 @@ Available commands:
   add-birthday [name] [birthday]                 - Adds birthday to the contact
   show-birthday [name]                           - Shows birthday for specific contact
   birthdays                                      - Shows birthdays for all contacts celebrating next week
+  birthdays-for [days]                           - Shows birthdays for all contacts celebrating in the next amount of days
   add-note                                       - Adds note to Note Book.
   find-notes                                     - Search notes by keywords.
   delete-note                                    - Delete note by index in Note Book.
@@ -36,6 +38,7 @@ Available commands:
 
 
 def main():
+    print(AddressBook.check_today_birthdays)
     """Central function printing all the commands"""
     input_manager = InputManager()
     print("Welcome to the assistant bot!")
@@ -78,6 +81,8 @@ def main():
             print(input_manager.show_birthday(args))
         elif command == "birthdays":
             print(input_manager.get_next_week_birthdays())
+        elif command == "birthdays-for":
+            print(input_manager.get_birthdays_for_amount_days(args))
         elif command == "random-book":
             print(input_manager.generate_random_book())
         elif command == "add-note":
