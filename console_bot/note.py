@@ -88,6 +88,9 @@ class NoteBook(UserList):
 
     @classmethod
     def from_list(cls, data: list[dict]):
+        """
+        Create notebook from a list of dictionaries.
+        """
         note_book = cls()
         for el in data:
             note = Note(el["value"])
@@ -96,6 +99,9 @@ class NoteBook(UserList):
 
     @classmethod
     def load_from_file(cls, filename: str = "note_book.json"):
+        """
+        Load notebook from file.
+        """
         if os.path.exists(filename):
             with open(filename, 'r') as file:
                 data = json.load(file)
@@ -104,5 +110,8 @@ class NoteBook(UserList):
             return cls()
 
     def save_to_file(self, filename: str = 'note_book.json'):
+        """
+        Save notebook to file.
+        """
         with open(filename, 'w') as file:
             json.dump(self.to_list(), file)
