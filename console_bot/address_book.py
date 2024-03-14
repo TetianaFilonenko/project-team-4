@@ -256,6 +256,26 @@ class AddressBook(UserDict):
     def find(self, name: str):
         for key, value in filter(lambda el: name == el[0], self.items()):
             return f"Found record with name: '{key}'. \nResult: {str(value)}"
+        
+    def find_all(self, term: str):
+        res = ""
+        res1 = self.find(term)
+        if not res1:
+            res1 = "\nNot found in names"
+        else:
+            res1 = "\n" + res1
+        for value in filter(
+            lambda el: re.search(term, str(el))
+            and not re.search(str(el), res)
+            and not re.search(str(el), res1),
+            self.values(),
+        ):
+            res = res + f"{str(value)}\n"
+        if res:
+            res = "\n-=Found in other fields=-\n" + res
+        else:
+            res = "\nNothing found in fields\n"
+        return res1 + res
 
     def add_contact(self, record: Record, override=False):
         if override and record.name.value in self.data.keys():
