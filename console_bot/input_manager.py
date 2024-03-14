@@ -40,7 +40,7 @@ class InputManager:
         return self.book.find_all(term)
 
     def get_all_contacts(self):
-        return "\n".join(map(str, self.book.data.values()))
+        return "\n".join(sorted(map(str, self.book.data.values())))
 
     @input_error
     def add_birthday(self, args):
