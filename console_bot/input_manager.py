@@ -61,7 +61,7 @@ class InputManager:
         name, email = args
         result = self.book.add_email(name, email)
         if result:  # перевірте, чи вдалося додати електронну адресу
-            message = self.book.save_to_file('address_book.json')  # зберігає дані після успішного додавання електронної адреси
+            message = self.book.save_to_file('address_book.json')  #зберігає дані після успішного додавання електронної адреси
         return result, message
 
     @input_error
@@ -69,7 +69,7 @@ class InputManager:
         name, old_email, new_email = args
         result = self.book.change_email(name, old_email, new_email)
         if result:
-           message = self.book.save_to_file('address_book.json')
+           message = self.book.save_to_file('address_book.json') #зберігає дані після успішного додавання електронної адреси
         return result, message
 
     @input_error
