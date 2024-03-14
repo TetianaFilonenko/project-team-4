@@ -5,14 +5,13 @@ from console_bot.address_book import AddressBook
 from prompt_toolkit import PromptSession
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from prompt_toolkit.history import InMemoryHistory
-from prompt_toolkit.formatted_text import ANSI, HTML
 from prompt_toolkit.styles import Style
 
 
 def print_help():
     """Function printing help message for bot."""
     help_text = """
-Available commands:
+Available commands (->/right click is used for autocomplete a command):
   hello                                          - Ask the bot how it can help you.
   add [name] [phone]                             - Adds a contact with the specified name and phone number. Email and address can be added using separate commands.
   change [name] [old-phone] [phone]              - Changes the phone number for the specified contact.
