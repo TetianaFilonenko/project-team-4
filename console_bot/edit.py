@@ -1,5 +1,3 @@
-
-
 def get_index(field, book_size):
     index = input(f"Enter a index of {field}(eg. 1 for first): ")
     if index.isnumeric():
