@@ -38,7 +38,8 @@ def edit_record(input_manager,args):
             input_manager.delete_field(args[0], "phone", index - 1)
             print("phone has been deleted")
         else:
-            print(input_manager.change_contact(
+            print(
+                input_manager.change_contact(
                     [args[0], str(record.phones[index - 1]), nphone]
                 )
             )
