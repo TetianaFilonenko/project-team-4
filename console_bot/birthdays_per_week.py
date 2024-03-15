@@ -6,7 +6,10 @@ from collections import defaultdict
 # - print users birthdays for the next week starting from current date
 # - users that have birthday on weekend need to be greeted the next Monday
 # - week starts from Monday
-def get_birthdays_per_week(users):
+def get_birthdays_per_week(users: list):
+    """
+    Print users for `users` list that have birthday next week
+    """
     current_date = datetime.today().date()
     result = defaultdict(list)
     for user in users:
@@ -21,8 +24,12 @@ def get_birthdays_per_week(users):
         return "No birthdays next week"
     return "\n".join([f"{date}: {(',').join(people)}" for date, people in result.items()])
 
+
 # Print users for 'users' list that have birthdays in the next number of days
-def get_birthdays_in_next_days(users, days):
+def get_birthdays_in_next_days(users: list, days: int):
+    """
+    Print users for 'users' list that have birthdays in the next number of days
+    """
     current_date = datetime.today().date()
     result = defaultdict(list)
     for user in users:
@@ -36,7 +43,11 @@ def get_birthdays_in_next_days(users, days):
         return f"No birthdays in next {days} days"
     return "\n".join([f"{date}: {(',').join(people)}" for date, people in result.items()])
 
-def get_today_birthday(users):
+
+def get_today_birthday(users: list):
+    """
+    Print users for `users` list that have birthday today
+    """
     current_date = datetime.today().date()
     result = defaultdict(list)
     for user in users:
@@ -47,20 +58,29 @@ def get_today_birthday(users):
             result['Today'].append(user_name)
     if not result:
         return 'Today there is no birthdays'
-    return '\n'.join([f'Don`t forget to congratulate: {(',').join(people)}' for people in result.values()])
+    return '\n'.join([f"Don't forget to congratulate: {', '.join(people)}" for people in result.values()])
 
 
-def result_dates(result, user_name, birthday_this_year):
+def result_dates(result: defaultdict, user_name: str, birthday_this_year: datetime):
+    """
+    Update result dictionary with username and birthday date in format 'day month'
+    """
     day_date = birthday_this_year.strftime('%d %B')
     result[day_date].append(user_name)
 
 
-def update_result(result, user_name, birthday_this_year):
+def update_result(result: defaultdict, user_name: str, birthday_this_year: datetime):
+    """
+    Update result dictionary with username and birthday date in format 'day month'
+    """
     day_string = birthday_this_year.strftime('%A')
     result[day_string].append(user_name)
 
 
-def prepare_birthday_date(current_date, user_birthday):
+def prepare_birthday_date(current_date: datetime.date, user_birthday: datetime.date):
+    """
+    Prepare birthday date for the current year and adjust for weekends
+    """
     try:
         birthday_this_year = user_birthday.replace(year=current_date.year)
     except ValueError:  # For February 29th on non-leap years
@@ -92,7 +112,7 @@ if __name__ == "__main__":
     ], 1))
     print(get_today_birthday([
         {"name": "Bill Gates", "birthday": datetime(1981, 3, 14)},
-        {"name": "Steve Jobs", "birthday": datetime(1982, 3, 15)},
+        {"name": "Steve Jobs", "birthday": datetime(1982, 3, 14)},
         {"name": "Tim Cook", "birthday": datetime(1991, 3, 17)},
         {"name": "Jef Bezos", "birthday": datetime(1992, 5, 13)},  # needs to be added to the list next week
         {"name": "Mark Zucherberg", "birthday": datetime(1983, 2, 10)},

@@ -1,7 +1,7 @@
 from setuptools import setup, find_namespace_packages
 
 setup(name='console_bot',
-      version='1.1',
+      version='1.2',
       description='Console bot that will help you with everything',
       url='https://github.com/TetianaFilonenko/project-team-4.git',
       author='Kobzar Coders',
@@ -10,5 +10,5 @@ setup(name='console_bot',
       packages= find_namespace_packages(),
       install_requires= ['faker', 'prompt_toolkit'],
       include_package_data=True,
-      entry_points= { 'console_scripts': ["run = console_bot:main"]}
+      entry_points= { 'console_scripts': ["run-console-bot = console_bot:main"]}
       )

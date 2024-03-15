@@ -1,12 +1,15 @@
 """Module providing classes and functions for working with notes"""
 
 from collections import UserList
+import json
+import os
+import random
 
 
 class Note:
     """Class representing a note"""
 
-    def __init__(self, value):
+    def __init__(self, value: str):
         self.value = value
 
     def __str__(self):
@@ -19,6 +22,7 @@ class Note:
 
     @value.setter
     def value(self, new_value):
+        """Value setter."""
         if new_value.strip() == "":
             raise ValueError("New value cannot be None or empty")
         self.__value = new_value
@@ -39,7 +43,7 @@ class NoteBook(UserList):
         self.data.append(note)
         return "Note was added"
 
-    def find_notes(self, keyword):
+    def find_notes(self, keyword: str):
         """Function to find notes containing a specific keyword."""
         found_notes = []
         for note in self.data:
@@ -48,7 +52,7 @@ class NoteBook(UserList):
 
         return "\n".join(f"{index}: {note}" for index, note in enumerate(found_notes))
 
-    def edit_note(self, index, new_value):
+    def edit_note(self, index: int, new_value: str):
         """Function to edit a note at a specific index."""
         if 0 <= index < len(self.data):
             self.data[index].value = new_value
@@ -56,7 +60,7 @@ class NoteBook(UserList):
         else:
             raise IndexError("Index out of range")
 
-    def delete_note(self, index):
+    def delete_note(self, index: int):
         """Function to delete a note at a specific index."""
         if 0 <= index < len(self.data):
             del self.data[index]
@@ -64,10 +68,52 @@ class NoteBook(UserList):
         else:
             raise IndexError("Index out of range.")
 
+    def generate_random(self, save=True):
+        """
+        Generate a random note and add it to the notebook.
+        """
+        with open("console_bot/quotes.txt", "r") as file:
+            poems = file.readlines()
+        poem = random.choice(poems).strip()  # Randomly select a poem from the list
+        note = Note(poem)
+        if save:
+            self.add_note(note)
+        return note.value
+
     def __str__(self):
         """Convert notebook to string."""
-        return "\n".join(f"{index}: {note}" for index, note in enumerate(self.data))
+        return "\n".join(f"{index}: {note}" for index, note in enumerate(sorted(self.data, key=lambda x: x.value)))
 
-    def to_dict(self):
+    def to_list(self):
         """Convert notebook to a list of dictionaries."""
         return [note.to_dict() for note in self.data]
+
+    @classmethod
+    def from_list(cls, data: list[dict]):
+        """
+        Create notebook from a list of dictionaries.
+        """
+        note_book = cls()
+        for el in data:
+            note = Note(el["value"])
+            note_book.data.append(note)
+        return note_book
+
+    @classmethod
+    def load_from_file(cls, filename: str = "note_book.json"):
+        """
+        Load notebook from file.
+        """
+        if os.path.exists(filename):
+            with open(filename, 'r') as file:
+                data = json.load(file)
+            return cls.from_list(data)
+        else:
+            return cls()
+
+    def save_to_file(self, filename: str = 'note_book.json'):
+        """
+        Save notebook to file.
+        """
+        with open(filename, 'w') as file:
+            json.dump(self.to_list(), file)
