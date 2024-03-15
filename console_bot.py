@@ -2,6 +2,7 @@
 
 from console_bot.input_manager import InputManager
 from console_bot.address_book import AddressBook
+from console_bot.edit import edit_record
 from prompt_toolkit import PromptSession
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from prompt_toolkit.history import InMemoryHistory
@@ -37,6 +38,7 @@ Available commands (->/right click is used for autocomplete a command):
   close/exit                                     - Exits the program.
   random-book                                    - Generate random book with 10 contacts.
   random-note                                    - Generate random note from Taras Hryhorovych Shevchenko poem
+  edit [fieldname] [name]                        - Edit/Delete phone, email, address.
 """
     print(help_text)
 
@@ -67,9 +69,9 @@ commands = [
     "exit",
     "random-book",
     "random-note",
+    "edit",
 ]
 style = Style.from_dict({"": "#1cb649 italic bold"})
-
 
 def main():
     """Central function printing all the commands"""
@@ -152,6 +154,8 @@ def main():
             print(input_manager.all_notes())
         elif command == "random-note":
             print_note(input_manager.random_note())
+        elif command == 'edit':
+            edit_record(args)            
         else:
             print("Invalid command.")
         input_manager.save_to_json()
