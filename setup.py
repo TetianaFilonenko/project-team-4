@@ -10,5 +10,5 @@ setup(name='console_bot',
       packages= find_namespace_packages(),
       install_requires= ['faker', 'prompt_toolkit'],
       include_package_data=True
-      entry_points= { 'console_scripts': ["console-bot = console_bot"]}
+      entry_points= { 'console_scripts': ["console-bot = console_bot:console_bot"]}
       )
