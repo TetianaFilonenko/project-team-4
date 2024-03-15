@@ -2,6 +2,9 @@ from .input_manager import InputManager
 
 
 def get_index(field, len):
+    """"
+    Function to get index from user
+    """"
     index = input(f"Enter a index of {field}(eg. 1 for first): ")
     if index.isnumeric():
         index = int(index)
@@ -14,6 +17,9 @@ def get_index(field, len):
 
 
 def edit_record(input_manager,args):
+    """
+    Function to update/delete phone/email/address from user input
+    """
     if len(args) < 2:
         print("Invalid input, expected 'edit field recordname'")
         return None  # continue
