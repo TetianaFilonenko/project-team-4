@@ -1,8 +1,8 @@
 """Module providing a function printing bot messages."""
 
-from console_bot.input_manager import InputManager
-from console_bot.address_book import AddressBook
-from console_bot.edit import edit_record
+from .input_manager import InputManager
+from .address_book import AddressBook
+from .edit import edit_record
 from prompt_toolkit import PromptSession
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from prompt_toolkit.history import InMemoryHistory
@@ -72,6 +72,7 @@ commands = [
     "edit",
 ]
 style = Style.from_dict({"": "#1cb649 italic bold"})
+
 
 def main():
     """Central function printing all the commands"""
@@ -154,8 +155,8 @@ def main():
             print(input_manager.all_notes())
         elif command == "random-note":
             print_note(input_manager.random_note())
-        elif command == 'edit':
-            edit_record(args)            
+        elif command == "edit":
+            edit_record(args)
         else:
             print("Invalid command.")
         input_manager.save_to_json()
