@@ -1,20 +1,16 @@
-from .input_manager import InputManager
-
-
-def get_index(field, len):
+def get_index(field, book_size):
     index = input(f"Enter a index of {field}(eg. 1 for first): ")
     if index.isnumeric():
         index = int(index)
     else:
         index = 0
-    if index > len or not index:
+    if index > book_size or not index:
         print("Invalid index, error executing edit command, try again")
         index = 0
     return index
 
 
-def edit_record(args):
-    input_manager = InputManager()
+def edit_record(input_manager, args):
     if len(args) < 2:
         print("Invalid input, expected 'edit field recordname'")
         return None  # continue

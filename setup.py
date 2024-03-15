@@ -9,7 +9,7 @@ setup(
     author_email="flyingcircus@example.com",
     license="MIT",
     packages=find_namespace_packages(),
-    install_requires=["faker", "prompt_toolkit"],
+    install_requires=["faker", "prompt_toolkit", "rich"],
     include_package_data=True,
     package_data={
         "console_bot": ["quotes.txt"],
