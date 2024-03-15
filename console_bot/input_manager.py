@@ -179,6 +179,19 @@ class InputManager:
         """
         index = int(index)
         return self.note_book.delete_note(int(index))
+    
+    @input_error
+    def delete_field(self, name, field, index: int):
+        """
+        Function to delete a note at a specific index.
+        """
+        record = self.book[name]
+        if field == "phone":
+            record.phones.pop(index)
+        elif field == "email":
+            record.emails.pop(index)
+        elif field == "address":
+            record.addresses.pop(index)
 
     def all_notes(self):
         """

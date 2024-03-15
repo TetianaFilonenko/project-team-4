@@ -169,9 +169,11 @@ def main():
                 continue
             field = args[0]
             args.pop(0)
+
             if not input_manager.get_contact_phone(args):
                 print(f"{args[0]} not found")
                 continue
+            
             record = input_manager.book[args[0]]
 
             if field == "phone":
@@ -183,7 +185,7 @@ def main():
                     continue
                 nphone = input("Enter new phone or enter 'delete': ")
                 if nphone == 'delete':
-                    record.phones.pop(index-1)
+                    input_manager.delete_field(args[0], "phone", index-1)
                     print("phone has been deleted")
                 else:
                     print(input_manager.change_contact([args[0], str(record.phones[index-1]), nphone]))                    
@@ -197,7 +199,7 @@ def main():
                     continue
                 nemail = input("Enter new email or enter 'delete': ")
                 if nemail == 'delete':
-                    record.emails.pop(index-1)
+                    input_manager.delete_field(args[0], "email", index-1)
                     print("email has been deleted")                    
                 else:
                     print(input_manager.change_contact_email([args[0], str(record.emails[index-1]), nemail]))
@@ -211,7 +213,7 @@ def main():
                     continue
                 naddr = input("Enter new address or enter 'delete': ")
                 if naddr == 'delete':
-                    record.addresses.pop(index-1)
+                    input_manager.delete_field(args[0], "address", index-1)
                     print("address has been deleted")
                 else:
                     print(input_manager.change_contact_address([args[0], str(record.addresses[index-1])], naddr))       
