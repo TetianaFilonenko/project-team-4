@@ -13,8 +13,7 @@ def get_index(field, len):
     return index
 
 
-def edit_record(args):
-    input_manager = InputManager()
+def edit_record(input_manager,args):
     if len(args) < 2:
         print("Invalid input, expected 'edit field recordname'")
         return None  # continue
@@ -39,11 +38,11 @@ def edit_record(args):
             input_manager.delete_field(args[0], "phone", index - 1)
             print("phone has been deleted")
         else:
-            print(
-                input_manager.change_contact(
+            print(input_manager.change_contact(
                     [args[0], str(record.phones[index - 1]), nphone]
                 )
             )
+            print(input_manager.get_all_contacts())
 
     elif field == "email":
         print(input_manager.get_contact_email(args))

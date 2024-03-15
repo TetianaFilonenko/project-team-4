@@ -155,7 +155,7 @@ def main():
         elif command == "random-note":
             print_note(input_manager.random_note())
         elif command == 'edit':
-            edit_record(args)            
+            edit_record(input_manager,args)     
         else:
             print("Invalid command.")
         input_manager.save_to_json()
