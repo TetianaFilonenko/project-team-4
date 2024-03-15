@@ -33,6 +33,8 @@ pip3 install -e .
 run-console-bot
 ```
 
+Or run with VS Code `Python Debugger: Debug using launch.json > Python: Module console_bot`
+
 ## Available Commands
 
 Console Bot supports the following commands:
