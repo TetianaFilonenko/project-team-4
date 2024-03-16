@@ -18,7 +18,7 @@ class Note:
         self.tags = tags
 
     def __str__(self):
-        if len(self.tags) > 0:
+        if self.tags and len(self.tags) > 0:
             return f"{self.value} - Tags: {', '.join(self.tags)}"
         else:
             return f"{self.value}"
@@ -54,7 +54,7 @@ class Note:
         """Value setter."""
         if new_value.strip() == "":
             raise ValueError("New value cannot be None or empty")
-        self.__value = new_value
+        self.__value = new_value.replace("\\n", "\n")
 
     def to_dict(self):
         """Convert note to dictionary."""
@@ -79,7 +79,9 @@ class NoteBook(UserList):
             if keyword in note.value:
                 found_notes.append(note)
 
-        return "\n".join(f"{index}: {note}" for index, note in enumerate(found_notes))
+        return "\n".join(
+            f"{index + 1}: {note}" for index, note in enumerate(found_notes)
+        )
 
     def find_notes_by_tag(self, tag: str):
         """Function to find notes containing a specific tag."""
@@ -88,7 +90,9 @@ class NoteBook(UserList):
             if note.has_tag(tag):
                 found_notes.append(note)
 
-        return "\n".join(f"{index}: {note}" for index, note in enumerate(found_notes))
+        return "\n".join(
+            f"{index + 1}: {note}" for index, note in enumerate(found_notes)
+        )
 
     def sort_notes_by_tag(self, tag):
         """
@@ -97,10 +101,15 @@ class NoteBook(UserList):
         """
         return sorted(self.data, key=lambda note: tag in note.tags)
 
-    def edit_note(self, index: int, new_value: str):
+    def edit_note(self, index: int, new_value: str, new_tags: str, mode):
         """Function to edit a note at a specific index."""
+
         if 0 <= index < len(self.data):
-            self.data[index].value = new_value
+            if not mode == "skip_description":
+                self.data[index].value = new_value
+            if not mode == "skip_tags":
+                new_tags = new_tags.split(",")
+                self.data[index].tags = new_tags
             return "Note was changed"
         else:
             raise IndexError("Index out of range")
@@ -131,10 +140,7 @@ class NoteBook(UserList):
 
     def __str__(self):
         """Convert notebook to string."""
-        return "\n".join(
-            f"{index}: {note}"
-            for index, note in enumerate(sorted(self.data, key=lambda x: x.value))
-        )
+        return "\n".join(f"{index + 1}: {note}" for index, note in enumerate(self.data))
 
     def to_list(self):
         """Convert notebook to a list of dictionaries."""
@@ -157,7 +163,7 @@ class NoteBook(UserList):
         Load notebook from file.
         """
         if os.path.exists(filename):
-            with open(filename, "r") as file:
+            with open(filename, "r", encoding="utf-8") as file:
                 data = json.load(file)
             return cls.from_list(data)
         else:
@@ -167,5 +173,5 @@ class NoteBook(UserList):
         """
         Save notebook to file.
         """
-        with open(filename, "w") as file:
-            json.dump(self.to_list(), file)
+        with open(filename, "w", encoding="utf-8") as file:
+            json.dump(self.to_list(), file, ensure_ascii=False)
