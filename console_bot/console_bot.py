@@ -30,6 +30,7 @@ commands = [
     "birthdays-for"
     "add-note",
     "find-notes",
+    "find-notes-by-tag",
     "delete-note",
     "change-note",
     "all-notes",
@@ -111,10 +112,14 @@ def main():
             print(input_manager.generate_random_book())
         elif command == "add-note":
             note = input("Enter your note: ")
-            print(input_manager.add_note(note))
+            tags = input("Enter your tags: ")
+            print(input_manager.add_note(note, tags))
         elif command == "find-notes":
             keyword = input("Enter searching keyword: ")
             print(input_manager.find_notes(keyword))
+        elif command == "find-notes-by-tag":
+            tag = input("Enter searching tag: ")
+            print(input_manager.find_notes_by_tag(tag))
         elif command == "delete-note":
             index = input("Enter index of note you want to remove: ")
             print(input_manager.delete_note(index))

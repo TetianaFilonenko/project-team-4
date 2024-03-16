@@ -10,11 +10,21 @@ from importlib import resources
 class Note:
     """Class representing a note"""
 
-    def __init__(self, value: str):
+    def __init__(self, value: str, tags=[]):
         self.value = value
+        self.tags = tags
 
     def __str__(self):
-        return str(self.value)
+        return f"{self.value} - Tags: {', '.join(self.tags)}"
+
+    def add_tag(self, tag):
+        self.tags.add(tag)
+
+    def remove_tag(self, tag):
+        self.tags.discard(tag)
+
+    def has_tag(self, tag):
+        return tag in self.tags
 
     @property
     def value(self):
@@ -30,7 +40,7 @@ class Note:
 
     def to_dict(self):
         """Convert note to dictionary."""
-        return {"value": self.value}
+        return {"value": self.value, "tags": self.tags}
 
 
 class NoteBook(UserList):
@@ -52,6 +62,18 @@ class NoteBook(UserList):
                 found_notes.append(note)
 
         return "\n".join(f"{index}: {note}" for index, note in enumerate(found_notes))
+    
+    def find_notes_by_tag(self, tag):
+        """Function to find notes containing a specific tag."""
+        found_notes = []
+        for note in self.data:
+            if note.has_tag(tag):
+                found_notes.append(note)
+
+        return "\n".join(f"{index}: {note}" for index, note in enumerate(found_notes))
+       
+    def sort_notes_by_tag(self, tag):
+        return sorted(self.data, key=lambda note: tag in note.tags)
 
     def edit_note(self, index: int, new_value: str):
         """Function to edit a note at a specific index."""
@@ -81,6 +103,12 @@ class NoteBook(UserList):
             self.add_note(note)
         return note.value
 
+    def find_notes_by_tag(self, tag):
+        return [note for note in self.data if note.has_tag(tag)]
+
+    def sort_notes_by_tag(self, tag):
+        return sorted(self.data, key=lambda note: tag in note.tags)
+
     def __str__(self):
         """Convert notebook to string."""
         return "\n".join(f"{index}: {note}" for index, note in enumerate(sorted(self.data, key=lambda x: x.value)))
@@ -96,7 +124,7 @@ class NoteBook(UserList):
         """
         note_book = cls()
         for el in data:
-            note = Note(el["value"])
+            note = Note(el["value"], el["tags"])
             note_book.data.append(note)
         return note_book
 

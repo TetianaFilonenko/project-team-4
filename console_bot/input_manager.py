@@ -151,11 +151,12 @@ class InputManager:
         return self.get_all_contacts()
 
     @input_error
-    def add_note(self, value: str):
+    def add_note(self, value: str, tags: str):
         """
         Function to add a note to the notebook.
         """
-        return self.note_book.add_note(Note(value))
+        tags=tags.split(",")
+        return self.note_book.add_note(Note(value, tags))
 
     @input_error
     def find_notes(self, keyword: str):
@@ -163,6 +164,13 @@ class InputManager:
         Function to find notes containing a specific keyword.
         """
         return self.note_book.find_notes(keyword)
+    
+    @input_error
+    def find_notes_by_tag(self, tag: str):
+        """
+        Function to find notes containing a specific tag.
+        """
+        return self.note_book.find_notes_by_tag(tag)
 
     @input_error
     def edit_note(self, index: str, new_note: str):
