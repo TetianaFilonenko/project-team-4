@@ -7,11 +7,22 @@ import os
 class Note:
     """Class representing a note"""
 
-    def __init__(self, value):
+    def __init__(self, value, tags=None):
         self.value = value
+        self.tags = set(tags) if tags else set()
+
 
     def __str__(self):
-        return str(self.value)
+        return f"{self.value} - Tags: {', '.join(self.tags)}"
+
+    def add_tag(self, tag):
+        self.tags.add(tag)
+
+    def remove_tag(self, tag):
+        self.tags.discard(tag)
+
+    def has_tag(self, tag):
+        return tag in self.tags
 
     @property
     def value(self):
@@ -65,9 +76,19 @@ class NoteBook(UserList):
         else:
             raise IndexError("Index out of range.")
 
+    def find_notes_by_tag(self, tag):
+        return [note for note in self.data if note.has_tag(tag)]
+
+    def sort_notes_by_tag(self, tag):
+        return sorted(self.data, key=lambda note: tag in note.tags)
+
     def __str__(self):
         """Convert notebook to string."""
         return "\n".join(f"{index}: {note}" for index, note in enumerate(self.data))
+    
+    def to_dict(self):
+        """Convert notebook to a list of dictionaries."""
+        return [note.to_dict() for note in self.data]
 
     def to_list(self):
         """Convert notebook to a list of dictionaries."""
