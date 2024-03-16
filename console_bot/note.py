@@ -4,6 +4,7 @@ from collections import UserList
 import json
 import os
 import random
+from importlib import resources
 
 
 class Note:
@@ -72,7 +73,7 @@ class NoteBook(UserList):
         """
         Generate a random note and add it to the notebook.
         """
-        with open("console_bot/quotes.txt", "r") as file:
+        with resources.open_text('console_bot', 'quotes.txt') as file:
             poems = file.readlines()
         poem = random.choice(poems).strip()  # Randomly select a poem from the list
         note = Note(poem)

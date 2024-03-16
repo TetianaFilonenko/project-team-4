@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from .input_manager import InputManager
 
 
@@ -10,10 +11,11 @@ def get_index(field, len):
         index = int(index)
     else:
         index = 0
-    if index > len or not index:
+    if index > book_size or not index:
         print("Invalid index, error executing edit command, try again")
         index = 0
     return index
+
 
 
 def edit_record(input_manager,args):

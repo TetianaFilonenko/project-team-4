@@ -24,11 +24,16 @@ pip3 install -r requirements.txt
 
 ## Usage
 
-To run the Console Bot application, execute the following command:
+To run the Console Bot application as a package, execute the following command:
 
 ```bash
-python console_bot.py
+python3 -m venv env
+source env/bin/activate
+pip3 install -e .
+run-console-bot
 ```
+
+Or run with VS Code `Python Debugger: Debug using launch.json > Python: Module console_bot`
 
 ## Available Commands
 
