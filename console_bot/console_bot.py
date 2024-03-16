@@ -112,7 +112,7 @@ def main():
             print(input_manager.generate_random_book())
         elif command == "add-note":
             note = input("Enter your note: ")
-            tags = input("Enter your tags: ")
+            tags = input("Enter your tags (separated by commas, Example: 'work,todo,assignment'): ")
             print(input_manager.add_note(note, tags))
         elif command == "find-notes":
             keyword = input("Enter searching keyword: ")

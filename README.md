@@ -33,7 +33,9 @@ pip3 install -e .
 run-console-bot
 ```
 
-Or run with VS Code `Python Debugger: Debug using launch.json > Python: Module console_bot`
+Or run with VS Code
+
+`Python Debugger: Debug using launch.json > Python: Module console_bot`
 
 ## Available Commands
 
@@ -60,6 +62,7 @@ Console Bot supports the following commands:
 | `birthdays-for [days]`                          | Shows birthdays for all contacts celebrating in the next amount of days. |
 | `add-note`                                      | Adds note to Note Book.                                                  |
 | `find-notes`                                    | Search notes by keywords.                                                |
+| `find-notes-by-tag`                             | Search notes by tag.                                                     |
 | `delete-note`                                   | Delete note by index in Note Book.                                       |
 | `edit-note`                                     | Edit note by index in Note Book.                                         |
 | `all-notes`                                     | Show all notes in Note Book.                                             |
