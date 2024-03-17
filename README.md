@@ -66,3 +66,4 @@ Console Bot supports the following commands:
 | `close/exit`                                    | Exits the program.                                                       |
 | `random-book`                                   | Generate random book with 10 contacts.                                   |
 | `random-note`                                   | Generate random note from Taras Hryhorovych Shevchenko poem.             |
+| `about-us`                                      | Shows developer team logo                                                |

@@ -8,6 +8,7 @@ from .input_manager import InputManager
 from .address_book import AddressBook
 from .edit import edit_record
 from .message_manager import print_help_message, print_welcome_message
+from .logo import print_ascii_art, logo
 
 commands = [
     "hello",
@@ -26,6 +27,7 @@ commands = [
     "add-birthday",
     "show-birthday",
     "birthdays",
+    "birthdays-for"
     "add-note",
     "find-notes",
     "delete-note",
@@ -36,6 +38,7 @@ commands = [
     "random-book",
     "random-note",
     "edit",
+    "about-us",
 ]
 style = Style.from_dict({"": "#1cb649 italic bold"})
 
@@ -51,6 +54,8 @@ def main():
         auto_suggest=AutoSuggestFromHistory(),
         enable_history_search=True,
     )
+
+    print_ascii_art(logo)
     print_welcome_message("Welcome to the assistant bot!")
     print(AddressBook().check_today_birthdays())
     print_note(input_manager.random_note(save=False))
@@ -123,6 +128,8 @@ def main():
             print_note(input_manager.random_note())
         elif command == "edit":
             edit_record(input_manager, args)
+        elif command == "about-us":
+            print_ascii_art(logo)
         else:
             print("Invalid command.")
         input_manager.save_to_json()
