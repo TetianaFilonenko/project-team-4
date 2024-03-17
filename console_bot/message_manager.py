@@ -113,6 +113,9 @@ def print_help_message():
             table.add_row("add-note", ":spiral_notepad: Adds note to Note Book.")
             table.add_row("find-notes", ":spiral_notepad: Searches notes by keywords.")
             table.add_row(
+                "find-notes-by-tag", ":spiral_notepad: Searches notes by tag."
+            )
+            table.add_row(
                 "delete-note", ":spiral_notepad: Deletes note by index in Note Book."
             )
             table.add_row(

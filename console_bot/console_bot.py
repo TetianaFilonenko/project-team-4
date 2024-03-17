@@ -30,6 +30,7 @@ commands = [
     "birthdays-for"
     "add-note",
     "find-notes",
+    "find-notes-by-tag",
     "delete-note",
     "change-note",
     "all-notes",
@@ -58,7 +59,7 @@ def main():
     print_ascii_art(logo)
     print_welcome_message("Welcome to the assistant bot!")
     print(AddressBook().check_today_birthdays())
-    print_note(input_manager.random_note(save=False))
+    print(input_manager.random_note(save=False))
 
     while True:
         try:
@@ -111,21 +112,25 @@ def main():
             print(input_manager.generate_random_book())
         elif command == "add-note":
             note = input("Enter your note: ")
-            print(input_manager.add_note(note))
+            tags = input(
+                "Enter your tags (separated by commas, Example: 'work,todo,assignment'): "
+            )
+            print(input_manager.add_note(note, tags))
         elif command == "find-notes":
             keyword = input("Enter searching keyword: ")
             print(input_manager.find_notes(keyword))
+        elif command == "find-notes-by-tag":
+            tag = input("Enter searching tag: ")
+            print(input_manager.find_notes_by_tag(tag))
         elif command == "delete-note":
-            index = input("Enter index of note you want to remove: ")
+            index = input("Enter index of note you want to remove (eg. 1 for first): ")
             print(input_manager.delete_note(index))
         elif command == "change-note":
-            index = input("Enter index of note you want to change: ")
-            new_note = input("Enter a new note: ")
-            print(input_manager.edit_note(index, new_note))
+            change_note(input_manager)
         elif command == "all-notes":
             print(input_manager.all_notes())
         elif command == "random-note":
-            print_note(input_manager.random_note())
+            print(input_manager.random_note())
         elif command == "edit":
             edit_record(input_manager, args)
         elif command == "about-us":
@@ -135,12 +140,22 @@ def main():
         input_manager.save_to_json()
 
 
-def print_note(text: str):
-    """
-    Function to print a note to the console in a readable format.
-    """
-    for line in text.split("\\n"):
-        print(line)
+def change_note(input_manager):
+    position = input("Enter index of note you want to change (eg. 1 for first): ")
+    new_note = input("Enter a new note or 'skip' if you don't want to change name: ")
+    new_tags = input(
+        "Enter new tags (separated by commas, Example: 'work,todo,assignment') or 'skip' if you don't want to change tags: "
+    )
+    skip_mode = ""
+    if new_note == "skip" and new_tags == "skip":
+        print("There is nothing to change, skipping...")
+        return
+    elif new_note == "skip":
+        skip_mode = "skip_description"
+    elif new_tags == "skip":
+        skip_mode = "skip_tags"
+
+    print(input_manager.edit_note(position, new_note, new_tags, skip_mode))
 
 
 if __name__ == "__main__":
