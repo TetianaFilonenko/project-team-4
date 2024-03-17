@@ -1,13 +1,12 @@
 from .errors import input_error
 from .note import NoteBook, Note
 from .address_book import Record, AddressBook
-import json
 
 
 class InputManager:
     def __init__(self):
-        self.book = AddressBook.load_from_file('address_book.json')
-        self.note_book = NoteBook.load_from_file('note_book.json')
+        self.book = AddressBook.load_from_file("address_book.json")
+        self.note_book = NoteBook.load_from_file("note_book.json")
 
     @input_error
     def parse_input(self, user_input: str):
@@ -151,11 +150,12 @@ class InputManager:
         return self.get_all_contacts()
 
     @input_error
-    def add_note(self, value: str):
+    def add_note(self, value: str, tags: str):
         """
         Function to add a note to the notebook.
         """
-        return self.note_book.add_note(Note(value))
+        tags = tags.split(",")
+        return self.note_book.add_note(Note(value, tags))
 
     @input_error
     def find_notes(self, keyword: str):
@@ -165,21 +165,28 @@ class InputManager:
         return self.note_book.find_notes(keyword)
 
     @input_error
-    def edit_note(self, index: str, new_note: str):
+    def find_notes_by_tag(self, tag: str):
+        """
+        Function to find notes containing a specific tag.
+        """
+        return self.note_book.find_notes_by_tag(tag)
+
+    @input_error
+    def edit_note(self, position: str, new_note: str, new_tags: str, mode: str):
         """
         Function to edit a note at a specific index.
         """
-        index = int(index)
-        return self.note_book.edit_note(index, new_note)
+        position = int(position)
+        return self.note_book.edit_note(position - 1, new_note, new_tags, mode)
 
     @input_error
-    def delete_note(self, index: str):
+    def delete_note(self, position: str):
         """
         Function to delete a note at a specific index.
         """
-        index = int(index)
-        return self.note_book.delete_note(int(index))
-    
+        position = int(position)
+        return self.note_book.delete_note(position - 1)
+
     @input_error
     def delete_field(self, name, field, index: int):
         """
@@ -200,6 +207,9 @@ class InputManager:
         return str(self.note_book)
 
     def random_note(self, save=True):
+        """
+        Function to generate a note with random poem.
+        """
         return self.note_book.generate_random(save)
 
     def save_to_json(self):

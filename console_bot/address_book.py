@@ -356,10 +356,10 @@ class AddressBook(UserDict):
         else:
             res1 = "\n" + res1
         for value in filter(
-                lambda el: re.search(term, str(el))
-                           and not re.search(str(el), res)
-                           and not re.search(str(el), res1),
-                self.values(),
+            lambda el: re.search(term, str(el))
+            and not re.search(str(el), res)
+            and not re.search(str(el), res1),
+            self.values(),
         ):
             res = res + f"{str(value)}\n"
         if res:

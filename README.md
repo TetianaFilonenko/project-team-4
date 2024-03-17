@@ -33,7 +33,9 @@ pip3 install -e .
 run-console-bot
 ```
 
-Or run with VS Code `Python Debugger: Debug using launch.json > Python: Module console_bot`
+Or run with VS Code
+
+`Python Debugger: Debug using launch.json > Python: Module console_bot`
 
 ## Available Commands
 
@@ -59,10 +61,12 @@ Console Bot supports the following commands:
 | `birthdays`                                     | Shows birthdays for all contacts celebrating next week.                  |
 | `birthdays-for [days]`                          | Shows birthdays for all contacts celebrating in the next amount of days. |
 | `add-note`                                      | Adds note to Note Book.                                                  |
-| `find-notes`                                    | Search notes by keywords.                                                |
-| `delete-note`                                   | Delete note by index in Note Book.                                       |
-| `edit-note`                                     | Edit note by index in Note Book.                                         |
-| `all-notes`                                     | Show all notes in Note Book.                                             |
+| `find-notes`                                    | Searches notes by keywords.                                              |
+| `find-notes-by-tag`                             | Searches notes by tag.                                                   |
+| `delete-note`                                   | Deletes note by index in Note Book.                                      |
+| `change-note`                                   | Changes note by index in Note Book.                                      |
+| `all-notes`                                     | Shows all notes in Note Book.                                            |
 | `close/exit`                                    | Exits the program.                                                       |
-| `random-book`                                   | Generate random book with 10 contacts.                                   |
-| `random-note`                                   | Generate random note from Taras Hryhorovych Shevchenko poem.             |
+| `random-book`                                   | Generates random book with 10 contacts.                                  |
+| `random-note`                                   | Generates random note from Taras Hryhorovych Shevchenko poem.            |
+| `about-us`                                      | Shows developer team logo                                                |
