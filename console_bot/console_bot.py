@@ -27,6 +27,7 @@ commands = [
     "add-birthday",
     "show-birthday",
     "birthdays",
+    "birthdays-for"
     "add-note",
     "find-notes",
     "delete-note",
@@ -37,6 +38,7 @@ commands = [
     "random-book",
     "random-note",
     "edit",
+    "about-us",
 ]
 style = Style.from_dict({"": "#1cb649 italic bold"})
 
@@ -126,6 +128,8 @@ def main():
             print_note(input_manager.random_note())
         elif command == "edit":
             edit_record(input_manager, args)
+        elif command == "about-us":
+            print_ascii_art(logo)
         else:
             print("Invalid command.")
         input_manager.save_to_json()
